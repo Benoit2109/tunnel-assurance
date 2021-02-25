@@ -1,0 +1,61 @@
+@font-face {
+    font-family: "Helvetica-Medium";
+    src: url(../assets/fonts/HelveticaNowText-Medium.otf) format("truetype");
+
+    font-family: "Helvetica-Regular";
+    src: url(../assets/fonts/HelveticaNowText-Regular.otf) format("truetype");
+  }
+
+:root {
+    /* Fonts */
+    --main-font-Regular: "Helvetica-Regular";
+    --main-font-Medium: "Helvetica-Medium";
+  
+    /* Color */
+    --main-color-blue-dark: #006e9f;
+    --main-color-blue-light: #0088c2;
+    --main-color-orange: #ff3808;
+    --main-color-grey-bg: #f9f9f9;
+    --main-color-grey: grey;
+  
+    margin:0;
+    padding:0;
+  }
+  
+  a{
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  
+  input{
+    outline: none;
+  }
+  
+  button{
+    outline: none;
+    cursor: pointer;
+  }
+  
+  body{
+    margin: 0;
+    font-family: var(--main-font-Regular);
+  }
+
+  .btn_visible{
+    display: block;
+    border: 2px solid;
+    border-color: var(--main-color-blue-light);
+    background-color: var(--main-color-blue-light);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 1rem 4rem;
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+
+  .btn_hidden{
+    display: none;
+}

@@ -1,0 +1,21 @@
+.header_wrapper{
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.header_wrapper p{
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+}
+
+.header_wrapper img{
+    height: 30px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    position: absolute;
+}
