@@ -5,6 +5,7 @@ import styles from "./vehiculeCondition.module.css";
 import voiture from "../../assets/images/documents_car.png";
 import billet from "../../assets/images/billets_volants_insurance.png";
 import check from "../../assets/images/checkmark.png";
+import { Link } from "react-router-dom";
 
 function VehiculeCondition() {
   const [selected, setSelected] = useState("");
@@ -69,13 +70,13 @@ function VehiculeCondition() {
         <img className={selected === "choice3"? styles.vc_check_on:styles.vc_check_off} src={check} alt="checkmark" />
       </div>
 
-      <button
+      <Link to={selected==="choice1"? "":"/financing"}><button
         className={selected ? style.btn_visible : style.btn_hidden}
         disabled={selected ? false : true}
         type="button"
       >
         Je m'assure en 3 étapes
-      </button>
+      </button></Link>
     </div>
   );
 }
