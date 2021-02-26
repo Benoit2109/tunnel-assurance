@@ -5,6 +5,7 @@ import RoadBScore from "../components/RoadBScore/RoadBScore";
 import VehiculeCondition from "../components/Vehicule-Condition/vehiculeCondition";
 import Financing from "../components/Financing/financing";
 import VehiculeInfos from "../components/VehiculeInfos/vehiculeInfos";
+import OwnedCar from "../components/OwnedCar/ownedCar";
 
 
 const Root = () => (
@@ -13,7 +14,9 @@ const Root = () => (
             <MainLayout exact path="/rbs" component={RoadBScore}/>
             <MainLayout exact path="/vehicule-condition" component={VehiculeCondition }/>
             <MainLayout exact path="/financing" component={Financing}/>
+            <MainLayout exact path="/owned-car" component={OwnedCar}/>
             <MainLayout exact path="/select-vehicule" component={VehiculeInfos}/>
+
         </Switch>
     </Router>
 )
