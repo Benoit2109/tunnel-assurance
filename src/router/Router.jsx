@@ -6,6 +6,10 @@ import VehiculeCondition from "../components/Vehicule-Condition/vehiculeConditio
 import Financing from "../components/Financing/financing";
 import VehiculeInfos from "../components/VehiculeInfos/vehiculeInfos";
 import OwnedCar from "../components/OwnedCar/ownedCar";
+import ActualVehicule from "../components/ActualVehicule/ActualVehicule";
+import Domiciliation from "../components/Domiciliation/Domiciliation";
+
+
 
 
 const Root = () => (
@@ -16,6 +20,9 @@ const Root = () => (
             <MainLayout exact path="/financing" component={Financing}/>
             <MainLayout exact path="/owned-car" component={OwnedCar}/>
             <MainLayout exact path="/select-vehicule" component={VehiculeInfos}/>
+            <MainLayout exact path="/actual-vehicule" component={ActualVehicule}/>
+            <MainLayout exact path="/domiciliation" component={Domiciliation}/>
+            
 
         </Switch>
     </Router>

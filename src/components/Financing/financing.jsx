@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { jourPlus2 } from "../commons/convertDate";
 
 import styles from "./financing.module.css";
 import style from "../../css/main.module.css";
-import { Link } from "react-router-dom";
+
 
 function Financing() {
   const [buyDate, setBuyDate] = useState("");
@@ -21,6 +23,7 @@ function Financing() {
     setFinance(e.target.value);
   };
 
+  
   return (
     <div className={styles.finance_wrapper}>
       <form className={styles.finance_form_wrapper}>
@@ -63,6 +66,7 @@ function Financing() {
               type="date"
               id="start-date"
               name="start-date"
+              min={jourPlus2}
               value={startDate}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"

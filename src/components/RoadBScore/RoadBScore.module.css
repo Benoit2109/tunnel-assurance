@@ -9,7 +9,7 @@
     flex-direction: column;
     align-items: center;
     margin: auto;
-    width: 80vw;
+    width: 90vw;
     text-align: center;
 }
 
@@ -30,11 +30,19 @@
     border: 2px solid;
     border-radius: 30px;
     width: fit-content;
-    padding: 1rem 4rem;
+    padding: 1rem 3rem;
     border-color: var(--main-color-blue-light);
     background-color: #fff;
     color: var(--main-color-blue-light);
     font-weight: bold;
+}
+
+.rbs_p_nomargin{
+    margin-top: 0;
+}
+
+.rbs_p_nomarginB{
+    margin-bottom: 0;
 }
 
 .rbs_form [type=text]{

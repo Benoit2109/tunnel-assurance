@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { jourPlus2, ojd } from "../commons/convertDate";
 
 import style from "../../css/main.module.css";
 import styles from "./ownedCar.module.css";
@@ -35,6 +36,8 @@ function OwnedCar() {
   const HandleInterrupt = (choice) => {
     setInterrupt(choice);
   };
+
+
   return (
     <div className={styles.owned_wrapper}>
       <form className={styles.owned_form_wrapper}>
@@ -45,6 +48,7 @@ function OwnedCar() {
               id="first-date"
               name="first-date"
               value={firstDate}
+              max={ojd}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
               onChange={(e) => HandleFirst(e)}
@@ -62,6 +66,7 @@ function OwnedCar() {
               id="buy-date"
               name="buy-date"
               value={buyDate}
+              max={ojd}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
               onChange={(e) => HandleBuy(e)}
@@ -114,7 +119,7 @@ function OwnedCar() {
           </div>
         </div>
 
-        <div className={interrupt==="oui"? styles.owned_field_wrapper: styles.owned_field_hidden}>
+        <div className={interrupt==="non"? styles.owned_field_wrapper: styles.owned_field_hidden}>
           <label htmlFor="stop-date">
             <input
               type="date"
@@ -136,15 +141,16 @@ function OwnedCar() {
               id="start-date"
               name="start-date"
               value={startDate}
+              min={jourPlus2}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
               onChange={(e) => HandleStart(e)}
             />
           </label>
-          <div className={styles.owned_placeholder}>Date d'achat</div>
+          <div className={styles.owned_placeholder}>Date de début souhaitée</div>
         </div>
       </form>
-      <Link to="/select-vehicule">
+      <Link to="/actual-vehicule">
         <button
           className={
             firstDate && finance && startDate && buyDate && interrupt

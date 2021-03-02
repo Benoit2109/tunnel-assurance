@@ -71,7 +71,7 @@ function VehiculeCondition() {
         <img className={selected === "choice3"? styles.vc_check_on:styles.vc_check_off} src={check} alt="checkmark" />
       </div>
 
-      <Link to={selected==="choice1"? "":"/financing"}><button
+      <Link to={selected==="choice1"? "/owned-car":"/financing"}><button
         className={selected ? style.btn_visible : style.btn_hidden}
         disabled={selected ? false : true}
         type="button"

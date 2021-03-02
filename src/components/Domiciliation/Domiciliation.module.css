@@ -1,0 +1,64 @@
+.dom_contener {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.dom_form_wrapper input[type="text"] {
+  width: 92vw;
+  max-width: 285px;
+  height: 2.5rem;
+  color: var(--main-color-blue-light);
+  border-radius: 0.2em;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+  padding-left: 1rem;
+  font-size: 1rem;
+  background-image: url(../../assets/images/house_with_garden_insurance.png);
+  background-size: 1.5em;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.6em) center;
+  overflow: hidden;
+}
+
+.dom_field_wrapper {
+  position: relative;
+}
+
+.dom_placeholder {
+  position: absolute;
+  top: -.5rem;
+  left: 0.7rem;
+  color: var(--main-color-grey);
+  font-size: 0.8rem;
+  background-color: white;
+}
+
+.dom_address_list{
+    background-color: var(--main-color-grey-bg);
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 5px;
+    z-index: 1000000;
+    position: absolute;
+    top: 15vh;
+}
+
+.dom_address_list_hidden{
+    display: none;
+}
+
+.dom_address_list ul{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0;
+}
+
+.dom_address_list li{
+    list-style-type: none;
+    color: var(--main-color-blue-light);
+    margin: .5rem 0;
+}
+
+
