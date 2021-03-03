@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Map from "./Map";
+import { Link } from "react-router-dom";
+
 import style from "../../css/main.module.css";
 import styles from "./Domiciliation.module.css";
+import cross from "../../assets/images/cross_ui.png";
+
 
 function Domiciliation() {
   const [address, setAddress] = useState([]);
@@ -20,11 +24,14 @@ function Domiciliation() {
   };
 
   const selectAddress = (e) => {
-
       setAddress([findAddress.find((el) => el.properties.id === e.target.id)])
       setFindAddress("");
-
   }
+
+  const initAddress = () => {
+      setAddress([]);
+  }
+
 
   return (
     <div className={styles.dom_contener}>
@@ -42,6 +49,7 @@ function Domiciliation() {
             </label>
             <div className={styles.dom_placeholder}>VOTRE ADRESSE</div>
           </div>
+          <img src={cross} className={styles.dom_cross} onClick={initAddress} alt="supprier l'addresse saisie"/>
         </form>
 
       </div>
@@ -50,7 +58,7 @@ function Domiciliation() {
         <Map className={styles.dom_map_wrapper} address={address}/>
       
 
-      <button className={style.btn_visible}>Étape suivante</button>
+      <Link to="/trajets"><button className={style.btn_visible}>Étape suivante</button></Link>
 
       <div
           className={

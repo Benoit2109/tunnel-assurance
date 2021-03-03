@@ -8,6 +8,7 @@ import VehiculeInfos from "../components/VehiculeInfos/vehiculeInfos";
 import OwnedCar from "../components/OwnedCar/ownedCar";
 import ActualVehicule from "../components/ActualVehicule/ActualVehicule";
 import Domiciliation from "../components/Domiciliation/Domiciliation";
+import Trajets from "../components/Trajets/Trajets";
 
 
 
@@ -22,8 +23,7 @@ const Root = () => (
             <MainLayout exact path="/select-vehicule" component={VehiculeInfos}/>
             <MainLayout exact path="/actual-vehicule" component={ActualVehicule}/>
             <MainLayout exact path="/domiciliation" component={Domiciliation}/>
-            
-
+            <MainLayout exact path="/trajets" component={Trajets}/>
         </Switch>
     </Router>
 )

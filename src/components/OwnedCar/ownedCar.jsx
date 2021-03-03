@@ -101,7 +101,7 @@ function OwnedCar() {
             <input
               type="checkbox"
               id="oui"
-              name="oui"
+              name="assure"
               value="oui"
               onClick={() => HandleInterrupt("oui")}
             />
@@ -111,7 +111,7 @@ function OwnedCar() {
             <input
               type="checkbox"
               id="non"
-              name="non"
+              name="assure"
               value="non"
               onClick={() => HandleInterrupt("non")}
             />

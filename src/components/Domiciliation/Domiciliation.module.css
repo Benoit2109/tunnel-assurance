@@ -5,8 +5,14 @@
   margin-top: 2rem;
 }
 
+.dom_form_wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .dom_form_wrapper input[type="text"] {
-  width: 92vw;
+  width: 70vw;
   max-width: 285px;
   height: 2.5rem;
   color: var(--main-color-blue-light);
@@ -19,6 +25,12 @@
   background-repeat: no-repeat;
   background-position: calc(100% - 0.6em) center;
   overflow: hidden;
+}
+
+.dom_cross{
+    height: 35px;
+    cursor: pointer;
+    margin-left: .5rem;
 }
 
 .dom_field_wrapper {

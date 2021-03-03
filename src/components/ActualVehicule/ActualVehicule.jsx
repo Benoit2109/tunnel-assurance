@@ -3,6 +3,7 @@ import axios from "axios";
 
 import style from "../../css/main.module.css";
 import styles from "./ActualVehicule.module.css";
+import { Link } from "react-router-dom";
 
 function ActualVehicule() {
   const [immat, setImmat] = useState("");
@@ -184,7 +185,7 @@ function ActualVehicule() {
           </div>
         </form>
 
-        <button className={style.btn_visible}>Étape suivante</button>
+        <Link to="/domiciliation"><button className={style.btn_visible}>Étape suivante</button></Link>
       </div>
     </div>
   );

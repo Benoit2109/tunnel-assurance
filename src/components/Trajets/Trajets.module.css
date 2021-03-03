@@ -1,0 +1,110 @@
+.trajet_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .trajet_wrapper span {
+    font-weight: bold;
+    color: var(--main-color-blue-light);
+  }
+  
+  .trajet_wrapper > p {
+    width: 90%;
+    text-align: center;
+    margin-bottom: 2vh;
+    margin-top: 5vh;
+  }
+  
+  .trajet_card_contener{
+      display: flex;
+      justify-content: center;
+      width: 80%;
+      max-width: 500px;
+      position: relative;
+  }
+  
+  .trajet_card_template {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    border-radius: 5px;
+    box-shadow: 0 0 5px var(--main-color-grey);
+    margin: .5rem 0;
+    cursor: pointer;
+  }
+  
+  .trajet_card_contener:last-of-type {
+    margin-bottom: 15vh;
+  }
+  
+  .trajet_card_template img {
+    height: 30px;
+    margin: 1rem;
+  }
+  
+  .trajet_p {
+    margin: 1rem 1rem 1rem 2rem;
+    color: var(--main-color-grey);
+  }
+  
+  .trajet_p_selected {
+    margin: 1rem 1rem 1rem 2rem;
+    color: var(--main-color-blue-light);
+  }
+  
+  .trajet_check_on{
+      height:25px;
+      position: absolute;
+      left: -1rem;
+      top: 2rem;
+  }
+  
+  .trajet_check_off{
+      display: none;
+  }
+
+  .trajet_checkbox{
+      width: 15px;
+      height: 15px;
+      border: solid 2px var(--main-color-blue-light);
+      border-radius: 50%;
+      background-image: url(../../assets/images/checkmark.png);
+      background-size: 1.1rem;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  .trajet_checkbox_off{
+    width: 15px;
+    height: 15px;
+    border: solid 2px var(--main-color-blue-light);
+    border-radius: 50%;
+}
+
+  .trajet_prop_wrapper{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: .5rem;
+  }
+
+  .trajet_prop_wrapper p{
+      margin: .5rem;
+      color: var(--main-color-grey-bg);
+  }
+
+  .trajet_props_wrapper {
+      background-color: black;
+      border-radius: 5px;
+      padding: 1rem 0;
+  }
+
+  .trajet_check_section{
+      margin-bottom: 1rem;
+      width: 80%;
+      max-width: 500px;
+  }
