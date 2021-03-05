@@ -1,0 +1,194 @@
+.informations_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--main-color-grey-bg);
+  padding-bottom: 2rem;
+}
+.informations_contener {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 500px;
+}
+
+.informations_contener section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.informations_form_contener{
+    width: 95%;
+}
+
+.informations_avatar_wrapper {
+  display: flex;
+  width: 90%;
+  max-width: 300px;
+}
+
+.informations_avatar_wrapper p {
+  margin-right: auto;
+}
+
+.informations_avatar_m {
+  border: solid 3px var(--main-color-blue-light);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background-image: url(../../assets/images/male.png);
+  background-size: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 2rem;
+}
+
+.informations_avatar_m_off {
+  border: solid 2px var(--main-color-grey);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background-image: url(../../assets/images/male.png);
+  background-size: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 2rem;
+}
+
+.informations_avatar_w {
+  border: solid 3px var(--main-color-blue-light);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background-image: url(../../assets/images/female.png);
+  background-size: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.informations_avatar_w_off {
+  border: solid 2px var(--main-color-grey);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background-image: url(../../assets/images/female.png);
+  background-size: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.informations_input_contener input[type="text"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem 0 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: var(--main-font-Regular);
+  color: var(--main-color-blue-light);
+  border-radius: 3px;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+}
+
+.informations_input_contener input[type="tel"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem 0 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: var(--main-font-Regular);
+  color: var(--main-color-blue-light);
+  border-radius: 3px;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+}
+
+.informations_input_contener input[type="email"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem 0 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: var(--main-font-Regular);
+  color: var(--main-color-blue-light);
+  border-radius: 3px;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+}
+
+.informations_input_contener input[type="date"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  text-align: right;
+  font-size: 1rem;
+  font-family: var(--main-font-Regular);
+  color: var(--main-color-blue-light);
+  border-radius: 3px;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+}
+
+.informations_input_contener {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.informations_placeholder {
+  position: absolute;
+  top: -0.3rem;
+  left: 0.5rem;
+  font-size: 0.6rem;
+  color: var(--main-color-grey);
+  background-color: #fff;
+  width: fit-content;
+  padding: 0 0.3rem;
+  border-radius: 2px 2px 0 0;
+}
+
+.informations_placeholder_center {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--main-color-grey);
+}
+
+.informations_birth_wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.informations_birth_relative{
+    position: relative; 
+    width: 25%;
+}
+
+.informations_birth_wrapper input[type="number"] {
+  width: 100%;
+  max-width: 120px;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  font-size: 1rem;
+  font-family: var(--main-font-Regular);
+  color: var(--main-color-blue-light);
+  border-radius: 3px;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+}
+
+  .informations_input_contener select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  padding: 0.5em 2em 0.5em 0.9em;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1px solid rgb(207, 210, 219);
+  border-radius: 0.2em;
+  background-color: rgb(250, 250, 250);
+  background-image: url(../../assets/images/chevron_down.png);
+  background-size: 0.8em;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.6em) center;
+  outline: none;
+  width: 103.6%;
+  max-width: 500px;
+  box-shadow: 0 0 3px rgba(128, 128, 128, 0.4);
+  border: none;
+  margin: 1rem 0;
+}

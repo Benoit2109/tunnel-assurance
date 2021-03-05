@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import style from "../../css/main.module.css";
 import styles from "./ActualVehicule.module.css";
 import { Link } from "react-router-dom";
+import { HeaderContext } from "../../Contexts/headerContext";
 
 function ActualVehicule() {
+  const {setHeader} = useContext(HeaderContext);
   const [immat, setImmat] = useState("");
   const [car, setCar] = useState({
     marque: "",
@@ -20,6 +22,9 @@ function ActualVehicule() {
     kilometrage: "",
   });
 
+  useEffect(()=>{
+    setHeader({ path:"/owned-car", title:"Voiture actuelle"});
+  },[setHeader])
   const Token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ2OTQ5NTYsInJvbGUiOiJbXCJBZG1pbmlzdHJhdG9yc1wiLFwiUmVnaXN0ZXJlZCBVc2Vyc1wiLFwiU3Vic2NyaWJlcnNcIl0iLCJuYW1laWQiOiI1MDQiLCJ1bmlxdWVfbmFtZSI6Imp1bGllbiB0ZXN0IiwibmJmIjoxNjE0NjA4NTU2LCJpc3MiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8iLCJhdWQiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8ifQ.FGdwGt2p6aXEGWEb0RMnunqu9CGQR1vIZNFxRSBHniQ`;
 
   const fetchImmat = (event) => {
@@ -61,7 +66,7 @@ function ActualVehicule() {
   return (
     <div className={styles.av_wrapper}>
       <div className={styles.av_fecthimmat}>
-        <p>Votre palque d'immatriculation</p>
+        <p>Votre plaque d'immatriculation</p>
         <form className={styles.av_fetchCar_wrapper}>
           <label htmlFor="immat">
             <input

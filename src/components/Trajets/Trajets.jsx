@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import style from "../../css/main.module.css";
 import styles from "./Trajets.module.css";
@@ -7,12 +7,18 @@ import board from "../../assets/images/trajet_prive_pro.png";
 import suitcase from "../../assets/images/trajet_pro.png";
 import check from "../../assets/images/checkmark.png";
 import { Link } from "react-router-dom";
+import { HeaderContext } from "../../Contexts/headerContext";
 
 function Trajets() {
+  const {setHeader} = useContext(HeaderContext);
   const [trajet, setTrajet] = useState("");
   const [garage, setGarage] = useState("");
   const [principal, setPrincipal] = useState("");
   const [titulaire, setTitulaire] = useState("");
+
+  useEffect(()=>{
+    setHeader({ path:"/domiciliation", title:"Vos trajets"});
+  },[setHeader])
 
   const handleTrajet = (choice) => {
     setTrajet(choice);
@@ -116,8 +122,8 @@ function Trajets() {
             <div
               className={
                 garage === "choice1"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handleGarage("choice1")}
             />
@@ -127,8 +133,8 @@ function Trajets() {
             <div
               className={
                 garage === "choice2"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handleGarage("choice2")}
             />
@@ -138,8 +144,8 @@ function Trajets() {
             <div
               className={
                 garage === "choice3"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handleGarage("choice3")}
             />
@@ -153,8 +159,8 @@ function Trajets() {
             <div
               className={
                 principal === "choice1"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handlePrincipal("choice1")}
             />
@@ -164,8 +170,8 @@ function Trajets() {
             <div
               className={
                 principal === "choice2"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handlePrincipal("choice2")}
             />
@@ -175,8 +181,8 @@ function Trajets() {
             <div
               className={
                 principal === "choice3"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handlePrincipal("choice3")}
             />
@@ -190,8 +196,8 @@ function Trajets() {
             <div
               className={
                 titulaire === "choice1"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handleTitulaire("choice1")}
             />
@@ -201,8 +207,8 @@ function Trajets() {
             <div
               className={
                 titulaire === "choice2"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handleTitulaire("choice2")}
             />
@@ -212,8 +218,8 @@ function Trajets() {
             <div
               className={
                 titulaire === "choice3"
-                  ? styles.trajet_checkbox
-                  : styles.trajet_checkbox_off
+                  ? style.checkbox
+                  : style.checkbox_off
               }
               onClick={() => handleTitulaire("choice3")}
             />
@@ -221,7 +227,7 @@ function Trajets() {
         </div>
       </div>
 
-      <Link to="">
+      <Link to="/informations">
         <button className={trajet && garage && principal && titulaire? style.btn_visible : style.btn_hidden}>Étape suivante</button>
       </Link>
     </div>

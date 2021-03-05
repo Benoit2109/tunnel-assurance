@@ -9,6 +9,8 @@ import OwnedCar from "../components/OwnedCar/ownedCar";
 import ActualVehicule from "../components/ActualVehicule/ActualVehicule";
 import Domiciliation from "../components/Domiciliation/Domiciliation";
 import Trajets from "../components/Trajets/Trajets";
+import Informations from "../components/Informations/Informations";
+import Antecedants from "../components/Antecedants/Antecedants";
 
 
 
@@ -17,13 +19,15 @@ const Root = () => (
     <Router>
         <Switch>
             <MainLayout exact path="/rbs" component={RoadBScore}/>
-            <MainLayout exact path="/vehicule-condition" component={VehiculeCondition }/>
+            <MainLayout exact path="/vehicule-condition" component={VehiculeCondition}/>
             <MainLayout exact path="/financing" component={Financing}/>
             <MainLayout exact path="/owned-car" component={OwnedCar}/>
             <MainLayout exact path="/select-vehicule" component={VehiculeInfos}/>
             <MainLayout exact path="/actual-vehicule" component={ActualVehicule}/>
             <MainLayout exact path="/domiciliation" component={Domiciliation}/>
             <MainLayout exact path="/trajets" component={Trajets}/>
+            <MainLayout exact path="/informations" component={Informations}/>
+            <MainLayout exact path="/antecedants" component={Antecedants}/>
         </Switch>
     </Router>
 )

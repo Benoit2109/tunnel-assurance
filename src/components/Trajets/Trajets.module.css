@@ -20,7 +20,7 @@
   .trajet_card_contener{
       display: flex;
       justify-content: center;
-      width: 80%;
+      width: 85%;
       max-width: 500px;
       position: relative;
   }
@@ -67,24 +67,6 @@
       display: none;
   }
 
-  .trajet_checkbox{
-      width: 15px;
-      height: 15px;
-      border: solid 2px var(--main-color-blue-light);
-      border-radius: 50%;
-      background-image: url(../../assets/images/checkmark.png);
-      background-size: 1.1rem;
-      background-repeat: no-repeat;
-      background-position: center;
-  }
-
-  .trajet_checkbox_off{
-    width: 15px;
-    height: 15px;
-    border: solid 2px var(--main-color-blue-light);
-    border-radius: 50%;
-}
-
   .trajet_prop_wrapper{
       display: flex;
       justify-content: space-between;
@@ -105,6 +87,7 @@
 
   .trajet_check_section{
       margin-bottom: 1rem;
-      width: 80%;
+      width: 85%;
       max-width: 500px;
   }
+

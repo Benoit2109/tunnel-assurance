@@ -1,5 +1,5 @@
 .header_wrapper{
-    height: 5vh;
+    height: 8vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,11 +11,19 @@
     box-sizing: border-box;
     text-align: center;
     width: 100%;
+    overflow: hidden;
+    font-weight: bold;
 }
 
 .header_wrapper img{
     height: 30px;
     box-sizing: border-box;
-    margin-left: 10px;
+    margin-left: 15px;
     position: absolute;
+    top: 1.2rem;
+}
+
+.header_wrapper Link{
+    width: fit-content;
+    height: auto;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import PropTypes from 'prop-types';
 
 import styles from "./Map.module.css";
 import cityIcon from "../../assets/images/insurance_address_map_marker.png";
@@ -39,3 +40,7 @@ function Map({ address }) {
 }
 
 export default Map;
+
+Map.propTypes = {
+  address: PropTypes.arrayOf(PropTypes.string).isRequired,
+}

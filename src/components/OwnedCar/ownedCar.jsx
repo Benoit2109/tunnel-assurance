@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { jourPlus2, ojd } from "../commons/convertDate";
 
 import style from "../../css/main.module.css";
 import styles from "./ownedCar.module.css";
+import { HeaderContext } from "../../Contexts/headerContext";
 
 function OwnedCar() {
+  const { setHeader } = useContext(HeaderContext);
   const [firstDate, setFirstDate] = useState("");
   const [buyDate, setBuyDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [finance, setFinance] = useState("");
   const [interrupt, setInterrupt] = useState("");
   const [stopDate, setStopDate] = useState("");
+
+  useEffect(() => {
+    setHeader({
+      path: "/vehicule-condition",
+      title: "Information du véhicule",
+    });
+  }, [setHeader]);
 
   const HandleFirst = (e) => {
     setFirstDate(e.target.value);
@@ -36,7 +45,6 @@ function OwnedCar() {
   const HandleInterrupt = (choice) => {
     setInterrupt(choice);
   };
-
 
   return (
     <div className={styles.owned_wrapper}>
@@ -96,30 +104,34 @@ function OwnedCar() {
         <div className={styles.owned_field_wrapper}>
           <p>Véhicule actuellement assuré ?</p>
           <div className={styles.owned_field_check_contener}>
-          <label htmlFor="oui" className={styles.owned_field_label}>
-            <div className={styles.owned_field_title}>oui</div>
-            <input
-              type="checkbox"
-              id="oui"
-              name="assure"
-              value="oui"
-              onClick={() => HandleInterrupt("oui")}
-            />
-          </label>
-          <label htmlFor="non" className={styles.owned_field_label}>
-            <div className={styles.owned_field_title}>non</div>
-            <input
-              type="checkbox"
-              id="non"
-              name="assure"
-              value="non"
-              onClick={() => HandleInterrupt("non")}
-            />
-          </label>
+            <div className={styles.owned_field_check_wrapper}>
+              <p>Oui</p>
+              <div
+                className={
+                  interrupt === true ? style.checkbox : style.checkbox_off
+                }
+                onClick={() => HandleInterrupt(true)}
+              />
+            </div>
+            <div className={styles.owned_field_check_wrapper}>
+              <p>Non</p>
+              <div
+                className={
+                  interrupt === false ? style.checkbox : style.checkbox_off
+                }
+                onClick={() => HandleInterrupt(false)}
+              />
+            </div>
           </div>
         </div>
 
-        <div className={interrupt==="non"? styles.owned_field_wrapper: styles.owned_field_hidden}>
+        <div
+          className={
+            interrupt === "non"
+              ? styles.owned_field_wrapper
+              : styles.owned_field_hidden
+          }
+        >
           <label htmlFor="stop-date">
             <input
               type="date"
@@ -147,7 +159,9 @@ function OwnedCar() {
               onChange={(e) => HandleStart(e)}
             />
           </label>
-          <div className={styles.owned_placeholder}>Date de début souhaitée</div>
+          <div className={styles.owned_placeholder}>
+            Date de début souhaitée
+          </div>
         </div>
       </form>
       <Link to="/actual-vehicule">

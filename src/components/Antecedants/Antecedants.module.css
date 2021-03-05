@@ -1,0 +1,106 @@
+.ante_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ante_form_wrapper {
+  width: 90%;
+}
+
+.ante_form_wrapper form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.ante_input_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.ante_input_wrapper_off{
+    display: none;
+  }
+
+.ante_form_wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  padding: 0.5em 2em 0.5em 0.9em;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1px solid rgb(207, 210, 219);
+  border-radius: 0.2em;
+  background-color: rgb(250, 250, 250);
+  background-image: url(../../assets/images/chevron_down.png);
+  background-size: 0.8em;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.6em) center;
+  outline: none;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 3px rgba(128, 128, 128, 0.4);
+  border: none;
+  margin: 1rem 0;
+}
+
+.ante_input_wrapper input[type="number"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  font-size: 1rem;
+  font-family: var(--main-font-Regular);
+  color: var(--main-color-blue-light);
+  border-radius: 3px;
+  border: solid 1.5px rgba(128, 128, 128, 0.2);
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.ante_input_wrapper input[type="text"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    font-size: 1rem;
+    font-family: var(--main-font-Regular);
+    color: var(--main-color-blue-light);
+    border-radius: 3px;
+    border: solid 1.5px rgba(128, 128, 128, 0.2);
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+  }
+
+.ante_input_wrapper label{
+    width: 100%;
+}
+
+.ante_input_wrapper p{
+    text-align: center;
+}
+
+.ante_checkbox_wrapper{
+    background-color: black;
+      border-radius: 5px;
+      padding: 1rem 0;
+      width: 100%;
+}
+
+.ante_checkbox_wrapper p{
+    color: #fff;
+}
+
+.ante_checkbox_contener{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.ante_resilied_section_off{
+    display: none;
+}

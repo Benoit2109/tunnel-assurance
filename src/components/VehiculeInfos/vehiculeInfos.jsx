@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { HeaderContext } from "../../Contexts/headerContext";
 
 import style from "../../css/main.module.css";
+
 import styles from "./vehiculeInfos.module.css";
 
 function VehiculeInfos() {
+  const {setHeader} = useContext(HeaderContext);
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
+
+  useEffect(()=>{
+    setHeader({ path:"/vehicule-condition", title:"Information du véhicule"});
+  },[setHeader])
 
   const HandleBrand = (e) => {
     setBrand(e.target.value);

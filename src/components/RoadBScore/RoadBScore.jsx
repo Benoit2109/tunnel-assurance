@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IframeResizer from 'iframe-resizer-react';
 
 import styles from "./RoadBScore.module.css";
 import style from "../../css/main.module.css";
+import { HeaderContext } from "../../Contexts/headerContext";
 
 function RoadBScore() {
+  const {setHeader} = useContext(HeaderContext);
   const [rbscore, setRbscore] = useState("AAAAAAAAAAAAAAAAAAAA");
+
+  useEffect(()=>{
+    setHeader({ path:"/", title:"Road-B-Score ®"});
+  },[setHeader])
 
   const handleChange = (e) => {
     setRbscore(e.target.value);

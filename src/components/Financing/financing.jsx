@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { jourPlus2 } from "../commons/convertDate";
 
 import styles from "./financing.module.css";
 import style from "../../css/main.module.css";
+import { HeaderContext } from "../../Contexts/headerContext";
 
 
 function Financing() {
+  const {setHeader} = useContext(HeaderContext);
   const [buyDate, setBuyDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [finance, setFinance] = useState("");
+
+  useEffect(()=>{
+    setHeader({path:"/vehicule-condition", title:"Financement"})
+  },[setHeader])
 
   const HandleBuy = (e) => {
     setBuyDate(e.target.value);
