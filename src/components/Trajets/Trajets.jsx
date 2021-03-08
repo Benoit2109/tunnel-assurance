@@ -56,7 +56,7 @@ function Trajets() {
         >
           <p
             className={
-              proposition?.vehicle?.use === "PRVATE"
+              proposition?.vehicle?.use === "PRIVATE"
                 ? styles.trajet_p_selected
                 : styles.trajet_p
             }
@@ -106,7 +106,7 @@ function Trajets() {
       <div className={styles.trajet_card_contener}>
         <div
           className={styles.trajet_card_template}
-          onClick={() => handleTrajet("PRIVATE AND BUSINESS")}
+          onClick={() => handleTrajet("PRIVATE_AND_BUSINESS")}
         >
           <p
             className={

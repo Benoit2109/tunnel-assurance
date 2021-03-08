@@ -6,23 +6,17 @@ import { years3ago } from "../commons/convertDate";
 import style from "../../css/main.module.css";
 import styles from "./Antecedants.module.css";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
+import axios from "axios";
 
 function Antecedants() {
-  const {setHeader} = useContext(HeaderContext);
+  const { setHeader } = useContext(HeaderContext);
+  const { proposition, setProposition } = useContext(PropositionContext);
   const [bonus, setBonus] = useState("");
   const [malus, setMalus] = useState("");
-  const [insured, setInsured] = useState({
-    insuranceRate: "",
-    insuredPeriod: "non",
-    months1insured: "",
-    lastInsuranceCompany: "",
-    resilied: "",
-    resiliedReason: "",
-    resiliedCompanyName: "",
-  });
 
   useEffect(() => {
-    setHeader({ path:"/informations", title:"Antécédents assurances"});
+    setHeader({ path: "/informations", title: "Antécédents assurances" });
     const BonusList = () => {
       let boucleBonus = [];
       for (let i = 51; i < 100; i++) {
@@ -42,94 +36,174 @@ function Antecedants() {
     MalusList();
   }, [setHeader]);
 
+  const HandleBonusMalus = (e) =>{
+    if (0 <= e.target.value <= 6){
+      setProposition({
+        ...proposition,
+        drivers: {
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              previousInsurance: {
+                ...proposition.drivers.drivers[0].previousInsurance,
+                bonusMalus: 50, bonusSenorityYears:parseInt(e.target.value)
+              },
+            },
+          },
+        },
+      });
+    } else {setProposition({
+      ...proposition,
+      drivers: {
+        ...proposition.drivers,
+        drivers: {
+          ...proposition.drivers.drivers,
+          [0]: {
+            ...proposition.drivers.drivers[0],
+            previousInsurance: {
+              ...proposition.drivers.drivers[0].previousInsurance,
+              [e.target.name]: e.target.value,
+            },
+          },
+        },
+      },
+    });}
+  }
+
   const handleInsured = (e) => {
-    setInsured({ ...insured, [e.target.name]: e.target.value });
+    setProposition({
+      ...proposition,
+      drivers: {
+        ...proposition.drivers,
+        drivers: {
+          ...proposition.drivers.drivers,
+          [0]: {
+            ...proposition.drivers.drivers[0],
+            previousInsurance: {
+              ...proposition.drivers.drivers[0].previousInsurance,
+              [e.target.name]: e.target.value,
+            },
+          },
+        },
+      },
+    });
   };
 
   const handleResilied = (choice) => {
-    setInsured({ ...insured, resilied: choice });
+    setProposition({
+      ...proposition,
+      drivers: {
+        ...proposition.drivers,
+        drivers: {
+          ...proposition.drivers.drivers,
+          [0]: {
+            ...proposition.drivers.drivers[0],
+            previousInsurance: {
+              ...proposition.drivers.drivers[0].previousInsurance,
+              hasInsuranceTerminate: choice,
+            },
+          },
+        },
+      },
+    });
   };
+
+  const SubmitProposition = () => {
+    const Token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ2OTQ5NTYsInJvbGUiOiJbXCJBZG1pbmlzdHJhdG9yc1wiLFwiUmVnaXN0ZXJlZCBVc2Vyc1wiLFwiU3Vic2NyaWJlcnNcIl0iLCJuYW1laWQiOiI1MDQiLCJ1bmlxdWVfbmFtZSI6Imp1bGllbiB0ZXN0IiwibmJmIjoxNjE0NjA4NTU2LCJpc3MiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8iLCJhdWQiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8ifQ.FGdwGt2p6aXEGWEb0RMnunqu9CGQR1vIZNFxRSBHniQ`;
+    axios.post("https://testdriving.good-angel.fr/api/Insurance/Propositions",
+    { headers: { Authorization: `Bearer ${Token}` } }
+  )
+  .then((res) => res.data)
+  .then((res) => {
+    console.log(res);
+  })};
 
   return (
     <div className={styles.ante_wrapper}>
       <section className={styles.ante_form_wrapper}>
         <form>
-          <select name="insuranceRate" onChange={(e) => handleInsured(e)}>
+          <select name="bonusMalus" onChange={(e) => HandleBonusMalus(e)}>
             <option>Sélectionner votre bonus/malus</option>
-            <option value="0.48">
+            <option value="6">
               0.50 soit 50% de bonus, depuis + de 6 ans
             </option>
-            <option value="0.47">
+            <option value="5">
               0.50 soit 50% de bonus, depuis 5 à 6 ans
             </option>
-            <option value="0.46">
+            <option value="4">
               0.50 soit 50% de bonus, depuis 4 à 5 ans
             </option>
-            <option value="0.47">
+            <option value="3">
               0.50 soit 50% de bonus, depuis 3 à 4 ans
             </option>
-            <option value="0.48">
+            <option value="2">
               0.50 soit 50% de bonus, depuis 2 à 3 ans
             </option>
-            <option value="0.49">
+            <option value="1">
               0.50 soit 50% de bonus, depuis 1 à 2 ans
             </option>
-            <option value="0.5">
+            <option value="0">
               0.50 soit 50% de bonus, depuis - de 1 an
             </option>
             {bonus &&
               bonus.map((el) => (
-                <option value={el} id={el}>
+                <option value={el*100} id={el}>
                   {el} soit {Math.floor(100 - el * 100)}% de bonus
                 </option>
               ))}
-            <option value="O">1.00 soit 0% ni bonus, ni malus</option>
+            <option value="100">1.00 soit 0% ni bonus, ni malus</option>
             {malus &&
               malus.map((el) => (
-                <option value={el} id={el}>
+                <option value={el*100} id={el}>
                   {el} soit {Math.floor(el * 100 - 100)}% de malus
                 </option>
               ))}
           </select>
-          <select name="insuredPeriod" onChange={(e) => handleInsured(e)}>
-            <option>Avez-vous été assuré ?</option>
-            <option value="non">Non</option>
-            <option value="-12">Oui, assuré de moins de 12 mois</option>
-            <option value="/12">
+          <select name="insuranceSeniority" onChange={(e) => handleInsured(e)}>
+            <option value="UNKNOWN">Avez-vous été assuré ?</option>
+            <option value="NO_NEVER_INSURED">Non</option>
+            <option value="YES_INSURED_LESS_12_MONTHS">
+              Oui, assuré de moins de 12 mois
+            </option>
+            <option value="YES_WITH_INTERRUPTION_ON_LAST_12_MONTHS">
               Oui, assuré avec interruptions sur les 12 derniers mois
             </option>
-            <option value="/24">
+            <option value="YES_WITH_INTERRUPTION_ON_LAST_24_MONTHS">
               Oui, assuré avec interruptions sur les 24 derniers mois
             </option>
-            <option value="/36">
+            <option value="YES_WITH_INTERRUPTION_ON_LAST_36_MONTHS">
               Oui, assuré avec interruptions sur les 36 derniers mois
             </option>
-            <option value="36">
+            <option value="YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE">
               Oui, assuré sans interruptions sur les 36 derniers mois
             </option>
           </select>
           <div
             className={
-              insured && insured.insuredPeriod !== "non"
+              (proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.insuranceSeniority !== "UNKNOWN") && (proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.insuranceSeniority !== "NO_NEVER_INSURED") 
                 ? styles.ante_input_wrapper
                 : styles.ante_input_wrapper_off
             }
           >
             <p>Nombre de mois d'assurance depuis le {lastYear}</p>
-            <label htmlFor="months1insured">
+            <label htmlFor="insuranceMonths">
               <input
                 onChange={(e) => handleInsured(e)}
                 type="number"
-                name="months1insured"
-                id="months1insured"
+                name="insuranceMonths"
+                id="insuranceMonths"
               />
             </label>
-            <label htmlFor="lastInsuranceCompany">
+            <label htmlFor="lastInsuranceName">
               <input
                 onChange={(e) => handleInsured(e)}
                 type="text"
-                name="lastInsuranceCompany"
-                id="lastInsuranceCompany"
+                name="lastInsuranceName"
+                id="lastInsuranceName"
                 placeholder="Votre précédent assureur"
               />
             </label>
@@ -142,7 +216,8 @@ function Antecedants() {
                 <p>Oui</p>
                 <div
                   className={
-                    insured && insured.resilied === true
+                    proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.hasInsuranceTerminate === true
                       ? style.checkbox
                       : style.checkbox_off
                   }
@@ -153,7 +228,8 @@ function Antecedants() {
                 <p>Non</p>
                 <div
                   className={
-                    insured && insured.resilied === false
+                    proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.hasInsuranceTerminate === false
                       ? style.checkbox
                       : style.checkbox_off
                   }
@@ -163,31 +239,31 @@ function Antecedants() {
             </div>
             <div
               className={
-                (insured && insured.resilied === false) ||
-                insured.resilied === ""
+                (proposition?.drivers?.drivers[0]?.previousInsurance
+                  ?.hasInsuranceTerminate === false) ||
+                  (proposition?.drivers?.drivers[0]?.previousInsurance
+                  ?.hasInsuranceTerminate === "UNKNOWN")
                   ? styles.ante_resilied_section_off
                   : ""
               }
             >
-              <select name="resiliedReason" onChange={(e) => handleInsured(e)}>
-                <option value="">Pour quel motif ?</option>
-                <option value="non paiement">Pour non paiement</option>
-                <option value="dossier incomplet">
-                  Pour dossier incomplet
-                </option>
-                <option value="fausse déclaration">
+              <select name="terminateReason" onChange={(e) => handleInsured(e)}>
+                <option value="UNKNOWN">Pour quel motif ?</option>
+                <option value="NON_PAYEMENT">Pour non paiement</option>
+                <option value="INCOMPLETE_FILE">Pour dossier incomplet</option>
+                <option value="FALSE_DECLARATION">
                   Pour fausse déclaration
                 </option>
-                <option value="sinistre">Pour sinistre</option>
-                <option value="sanction">Pour sanction pénale</option>
-                <option value="autre">Pour un autre motif</option>
+                <option value="CLAIM">Pour sinistre</option>
+                <option value="CRIMINAL_SANCTION">Pour sanction pénale</option>
+                <option value="ANOTHER">Pour un autre motif</option>
               </select>
-              <label htmlFor="resiliedCompanyName">
+              <label htmlFor="terminateBy">
                 <input
                   onChange={(e) => handleInsured(e)}
                   type="text"
-                  name="resiliedCompanyName"
-                  id="resiliedCompanyName"
+                  name="terminateBy"
+                  id="terminateBy"
                   placeholder="Nom de la dernière compagnie d'assurance ayant résiliée le contrat"
                 />
               </label>
@@ -196,7 +272,7 @@ function Antecedants() {
         </form>
       </section>
       <Link to="#">
-        <button className={style.btn_visible}>Étape suivante</button>
+        <button className={style.btn_visible} onClick={()=> SubmitProposition()}>Étape suivante</button>
       </Link>
     </div>
   );

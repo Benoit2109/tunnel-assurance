@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { jourPlus2, ojd } from "../commons/convertDate";
+import { jourPlus2, ojd, apiDate } from "../commons/convertDate";
 
 import style from "../../css/main.module.css";
 import styles from "./ownedCar.module.css";
@@ -39,12 +39,12 @@ function OwnedCar() {
   const HandleDate = (e) => {
     setProposition({
       ...proposition,
-      vehicle: { ...proposition.vehicle, [e.target.name]: e.target.value },
+      vehicle: { ...proposition.vehicle, [e.target.name]: apiDate(e.target.value) },
     });
   };
 
   const HandleDesiredEffect = (e) => {
-    setProposition({ ...proposition, desiredEffect: e.target.value });
+    setProposition({ ...proposition, [e.target.name]: apiDate(e.target.value) });
   };
 
   return (
@@ -56,11 +56,10 @@ function OwnedCar() {
               type="date"
               id="release"
               name="release"
-              value={proposition?.vehicle?.release}
               max={ojd}
-              required
-              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-              onChange={(e) => HandleVehicle(e)}
+              pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+              title="veuillez respecter le format de saisie de la date"
+              onChange={(e) => HandleDate(e)}
             />
           </label>
           <div className={styles.owned_placeholder}>
@@ -74,11 +73,10 @@ function OwnedCar() {
               type="date"
               id="getting"
               name="getting"
-              value={proposition?.vehicle?.getting}
               max={ojd}
-              required
-              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-              onChange={(e) => HandleVehicle(e)}
+              pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+              title="veuillez respecter le format de saisie de la date"
+              onChange={(e) => HandleDate(e)}
             />
           </label>
           <div className={styles.owned_placeholder}>Date d'achat</div>
@@ -144,9 +142,8 @@ function OwnedCar() {
               type="date"
               id="endOfInsurance"
               name="endOfInsurance"
-              value={proposition?.vehicle?.endOfInsurance}
-              required
-              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+              pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+              title="veuillez respecter le format de saisie de la date"
               onChange={(e) => HandleDate(e)}
             />
           </label>
@@ -159,10 +156,9 @@ function OwnedCar() {
               type="date"
               id="desiredEffect"
               name="desiredEffect"
-              value={proposition?.desiredEffect}
               min={jourPlus2}
-              required
-              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+              pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
+              title="veuillez respecter le format de saisie de la date"
               onChange={(e) => HandleDesiredEffect(e)}
             />
           </label>
@@ -174,10 +170,10 @@ function OwnedCar() {
       <Link to="/actual-vehicule">
         <button
           className={
-            proposition.vehicle.release &&
-            proposition.vehicle.fundingMode &&
-            proposition.vehicle.getting &&
-            proposition.vehicle.hasVehiculeInsuranceSinceGetting &&
+            proposition?.vehicle?.release &&
+            proposition?.vehicle?.fundingMode &&
+            proposition?.vehicle?.getting &&
+            proposition?.vehicle?.hasVehiculeInsuranceSinceGetting &&
             proposition.desiredEffect
               ? style.btn_visible
               : style.btn_hidden

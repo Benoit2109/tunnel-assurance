@@ -49,7 +49,7 @@ const PropositionProvider = ({ children }) => {
             interruptionInsuranceEnd: "2021-03-05T07:59:10.788Z",
             insuranceMonths: 0,
             lastInsuranceName: "string",
-            hasInsuranceTerminate: true,
+            hasInsuranceTerminate: "UNKNOWN",
             hasAlreadyInsuranceVSP: false,
             hasAlreadyInsuranceMoto: false,
             terminateReason: "UNKNOWN",

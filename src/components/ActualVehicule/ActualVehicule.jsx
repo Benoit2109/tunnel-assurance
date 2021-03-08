@@ -8,8 +8,8 @@ import { HeaderContext } from "../../Contexts/headerContext";
 import { PropositionContext } from "../../Contexts/PropositionContext";
 
 function ActualVehicule() {
-  const {setHeader} = useContext(HeaderContext);
-  const { proposition, setProposition} = useContext(PropositionContext);
+  const { setHeader } = useContext(HeaderContext);
+  const { proposition, setProposition } = useContext(PropositionContext);
   const [immat, setImmat] = useState("");
   const [car, setCar] = useState({
     marque: "",
@@ -24,9 +24,9 @@ function ActualVehicule() {
     kilometrage: "",
   });
 
-  useEffect(()=>{
-    setHeader({ path:"/owned-car", title:"Voiture actuelle"});
-  },[setHeader])
+  useEffect(() => {
+    setHeader({ path: "/owned-car", title: "Voiture actuelle" });
+  }, [setHeader]);
   const Token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ2OTQ5NTYsInJvbGUiOiJbXCJBZG1pbmlzdHJhdG9yc1wiLFwiUmVnaXN0ZXJlZCBVc2Vyc1wiLFwiU3Vic2NyaWJlcnNcIl0iLCJuYW1laWQiOiI1MDQiLCJ1bmlxdWVfbmFtZSI6Imp1bGllbiB0ZXN0IiwibmJmIjoxNjE0NjA4NTU2LCJpc3MiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8iLCJhdWQiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8ifQ.FGdwGt2p6aXEGWEb0RMnunqu9CGQR1vIZNFxRSBHniQ`;
 
   const fetchImmat = (event) => {
@@ -51,7 +51,10 @@ function ActualVehicule() {
             génération: "",
             nbPortes: res.nbPortes,
           });
-          setProposition({...proposition, vehicle:{...proposition.vehicle, price: res.prixVehic}})
+          setProposition({
+            ...proposition,
+            vehicle: { ...proposition.vehicle, price: res.prixVehic },
+          });
         });
     } else {
       console.error("plaque non reconnue");
@@ -63,7 +66,10 @@ function ActualVehicule() {
   };
 
   const handlekilo = (e) => {
-    setProposition({ ...proposition, vehicle:{...proposition.vehicle, kmTraveled: e.target.value }});
+    setProposition({
+      ...proposition,
+      vehicle: { ...proposition.vehicle, kmTraveled: e.target.value },
+    });
   };
 
   return (
@@ -77,6 +83,8 @@ function ActualVehicule() {
               id="immat"
               name="immat"
               value={immat}
+              pattern="[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}"
+              title="veuillez respecter le format de plaque d'immatriculation"
               placeholder="AB-123-CD"
               onChange={(e) => handleImmat(e)}
             />
@@ -193,7 +201,9 @@ function ActualVehicule() {
           </div>
         </form>
 
-        <Link to="/domiciliation"><button className={style.btn_visible}>Étape suivante</button></Link>
+        <Link to="/domiciliation">
+          <button className={style.btn_visible}>Étape suivante</button>
+        </Link>
       </div>
     </div>
   );

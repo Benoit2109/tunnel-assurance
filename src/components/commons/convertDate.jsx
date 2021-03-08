@@ -23,6 +23,18 @@ function convertDate2(inputFormat) {
   return [pad(d.getDate()), pad(d.getMonth() + 1),d.getFullYear()].join("/");
 }
 
+export function displayDate(inputFormat){
+  return inputFormat.split("").slice(0,9).join("");
+}
+
+export function apiDate(inputFormat) {
+  function pad(s) {
+    return s < 10 ? "0" + s : s;
+  }
+  var d = new Date(inputFormat);
+  return `${[d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-")}T07:59:10.788Z`;
+}
+
 export const jourPlus2 = convertDate(AftTmw);
 
 export const ojd = convertDate(new Date());

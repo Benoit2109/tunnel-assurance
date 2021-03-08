@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HeaderContext } from "../../Contexts/headerContext";
 import { PropositionContext } from "../../Contexts/PropositionContext";
+import {apiDate} from '../commons/convertDate';
 
 import style from "../../css/main.module.css";
 import styles from "./Informations.module.css";
@@ -10,31 +11,12 @@ function Informations() {
   const { setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
   const [sex, setSex] = useState("");
-  const [birthdate, setBirthdate] = useState({
-    day: "",
-    month: "",
-    year: "",
-  });
+
 
   useEffect(() => {
     setHeader({ path: "/trajets", title: "Informations" });
   }, [setHeader]);
 
-  const [driver, setDriver] = useState({
-    roleOrder: 1,
-    sex: "",
-    firstname: "",
-    name: "",
-    birthdate: `${birthdate.year}-${birthdate.month}-${birthdate.day}`,
-    telephone: "",
-    email: "",
-    address: "",
-    zip_code: "",
-    city: "",
-    familySituation: "",
-    profession: "",
-    drivingLicenceObtainedDate: "",
-  });
 
   const handleGender = (choice) => {
     setSex(choice);
@@ -63,9 +45,19 @@ function Informations() {
     });
   };
 
-  const handleBirthday = (e) => {
-    setBirthdate({ ...birthdate, [e.target.name]: e.target.value });
+  const handleDate = (e) => {
+    setProposition({
+      ...proposition,
+      drivers: {
+        ...proposition.drivers,
+        drivers: {
+          ...proposition.drivers.drivers,
+          [0]: { ...proposition.drivers.drivers[0], [e.target.name]: apiDate(e.target.value) }
+        }
+      }
+    });
   };
+
 
   return (
     <div className={styles.informations_wrapper}>
@@ -119,39 +111,17 @@ function Informations() {
               <div className={styles.informations_placeholder}>MON NOM</div>
             </div>
 
-            <div className={styles.informations_birth_wrapper}>
-              <div className={styles.informations_birth_relative}>
-                <label htmlFor="day">
-                  <input
-                    type="number"
-                    name="day"
-                    id="day"
-                    onChange={(e) => handleBirthday(e)}
-                  />
-                </label>
-                <div className={styles.informations_placeholder}>JJ</div>
-              </div>
-              <div className={styles.informations_birth_relative}>
-                <label htmlFor="month">
-                  <input
-                    type="number"
-                    name="month"
-                    id="month"
-                    onChange={(e) => handleBirthday(e)}
-                  />
-                </label>
-                <div className={styles.informations_placeholder}>MM</div>
-              </div>
-              <div className={styles.informations_birth_relative}>
-                <label htmlFor="year">
-                  <input
-                    type="number"
-                    name="year"
-                    id="year"
-                    onChange={(e) => handleBirthday(e)}
-                  />
-                </label>
-                <div className={styles.informations_placeholder}>AAAA</div>
+            <div className={styles.informations_input_contener}>
+              <label htmlFor="birthDate">
+                <input
+                  type="date"
+                  name="birthDate"
+                  id="birthDate"
+                  onChange={(e) => handleDate(e)}
+                />
+              </label>
+              <div className={styles.informations_placeholder_center}>
+                Date de naissance
               </div>
             </div>
 
@@ -246,7 +216,7 @@ function Informations() {
                   onChange={(e) => handleDriver(e)}
                 >
                   <option value="UNKNOWN">Profession</option>
-                  <option value="WITHOUT_PROFESSION profession">Sans profession</option>
+                  <option value="WITHOUT_PROFESSION">Sans profession</option>
                   <option value="STUDENT">Étudiant</option>
                   <option value="EMPLOYEE">Salarié</option>
                   <option value="CIVIL_SERVANT">Fonctionnaire</option>
@@ -266,7 +236,7 @@ function Informations() {
                   type="date"
                   name="drivingLicenceObtainedDate"
                   id="drivingLicenceObtainedDate"
-                  onChange={(e) => handleDriver(e)}
+                  onChange={(e) => handleDate(e)}
                 />
               </label>
               <div className={styles.informations_placeholder_center}>
