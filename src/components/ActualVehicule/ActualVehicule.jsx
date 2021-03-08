@@ -5,9 +5,11 @@ import style from "../../css/main.module.css";
 import styles from "./ActualVehicule.module.css";
 import { Link } from "react-router-dom";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
 
 function ActualVehicule() {
   const {setHeader} = useContext(HeaderContext);
+  const { proposition, setProposition} = useContext(PropositionContext);
   const [immat, setImmat] = useState("");
   const [car, setCar] = useState({
     marque: "",
@@ -49,6 +51,7 @@ function ActualVehicule() {
             génération: "",
             nbPortes: res.nbPortes,
           });
+          setProposition({...proposition, vehicle:{...proposition.vehicle, price: res.prixVehic}})
         });
     } else {
       console.error("plaque non reconnue");
@@ -60,7 +63,7 @@ function ActualVehicule() {
   };
 
   const handlekilo = (e) => {
-    setCar({ ...car, kilometrage: e.target.value });
+    setProposition({ ...proposition, vehicle:{...proposition.vehicle, kmTraveled: e.target.value }});
   };
 
   return (

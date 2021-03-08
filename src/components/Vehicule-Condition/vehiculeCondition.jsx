@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import style from "../../css/main.module.css";
 import styles from "./vehiculeCondition.module.css";
 import { Link } from "react-router-dom";
@@ -7,17 +7,21 @@ import voiture from "../../assets/images/documents_car.png";
 import billet from "../../assets/images/billets_volants_insurance.png";
 import check from "../../assets/images/checkmark.png";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
 
 function VehiculeCondition() {
   const { setHeader } = useContext(HeaderContext);
-  const [selected, setSelected] = useState("");
+  const {proposition, setProposition} = useContext(PropositionContext);
+  
 
   useEffect(() => {
     setHeader({ title: "Assurance", path: "/rbs" });
-  }, [setHeader]);
+    
+  }, []);
 
   const onClick = (choice) => {
-    setSelected(choice);
+    
+    setProposition({...proposition , vehicle:{...proposition.vehicle, gettingMode: choice}});
   };
 
   return (
@@ -28,11 +32,11 @@ function VehiculeCondition() {
       <div className={styles.vc_card_contener}>
         <div
           className={styles.vc_card_template}
-          onClick={() => onClick("choice1")}
+          onClick={() => onClick("HAVE_ALREADY_VEHICLE")}
         >
           <p
             className={
-              selected === "choice1" ? styles.vc_p_selected : styles.vc_p
+              proposition?.vehicle?.gettingMode === "HAVE_ALREADY_VEHICLE" ? styles.vc_p_selected : styles.vc_p
             }
           >
             J'assure un véhicule que je possède
@@ -41,7 +45,7 @@ function VehiculeCondition() {
         </div>
         <img
           className={
-            selected === "choice1" ? styles.vc_check_on : styles.vc_check_off
+            proposition?.vehicle?.gettingMode === "HAVE_ALREADY_VEHICLE" ? styles.vc_check_on : styles.vc_check_off
           }
           src={check}
           alt="checkmark"
@@ -51,11 +55,11 @@ function VehiculeCondition() {
       <div className={styles.vc_card_contener}>
         <div
           className={styles.vc_card_template}
-          onClick={() => onClick("choice2")}
+          onClick={() => onClick("GET_NEW_VEHICLE")}
         >
           <p
             className={
-              selected === "choice2" ? styles.vc_p_selected : styles.vc_p
+              proposition?.vehicle?.gettingMode === "GET_NEW_VEHICLE" ? styles.vc_p_selected : styles.vc_p
             }
           >
             J'assure un véhicule neuf
@@ -64,7 +68,7 @@ function VehiculeCondition() {
         </div>
         <img
           className={
-            selected === "choice2" ? styles.vc_check_on : styles.vc_check_off
+            proposition?.vehicle?.gettingMode === "GET_NEW_VEHICLE" ? styles.vc_check_on : styles.vc_check_off
           }
           src={check}
           alt="checkmark"
@@ -74,11 +78,11 @@ function VehiculeCondition() {
       <div className={styles.vc_card_contener}>
         <div
           className={styles.vc_card_template}
-          onClick={() => onClick("choice3")}
+          onClick={() => onClick("GET_USED_CAR")}
         >
           <p
             className={
-              selected === "choice3" ? styles.vc_p_selected : styles.vc_p
+              proposition?.vehicle?.gettingMode === "GET_USED_CAR" ? styles.vc_p_selected : styles.vc_p
             }
           >
             J'assure un véhicule d'occasion
@@ -87,17 +91,17 @@ function VehiculeCondition() {
         </div>
         <img
           className={
-            selected === "choice3" ? styles.vc_check_on : styles.vc_check_off
+            proposition?.vehicle?.gettingMode === "GET_USED_CAR" ? styles.vc_check_on : styles.vc_check_off
           }
           src={check}
           alt="checkmark"
         />
       </div>
 
-      <Link to={selected === "choice1" ? "/owned-car" : "/financing"}>
+      <Link to={proposition?.vehicle?.gettingMode === "HAVE_ALREADY_VEHICLE" ? "/owned-car" : "/financing"}>
         <button
-          className={selected ? style.btn_visible : style.btn_hidden}
-          disabled={selected ? false : true}
+          className={proposition?.vehicle?.gettingMode ? style.btn_visible : style.btn_hidden}
+          disabled={proposition?.vehicle?.gettingMode ? false : true}
           type="button"
         >
           Je m'assure en 3 étapes

@@ -1,22 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
 
 import style from "../../css/main.module.css";
 import styles from "./Informations.module.css";
 
 function Informations() {
-  const{setHeader} = useContext(HeaderContext);
+  const { setHeader } = useContext(HeaderContext);
+  const { proposition, setProposition } = useContext(PropositionContext);
   const [sex, setSex] = useState("");
   const [birthdate, setBirthdate] = useState({
-      day:"",
-      month:"",
-      year:"",
-  })
+    day: "",
+    month: "",
+    year: "",
+  });
 
-  useEffect(()=>{
-    setHeader({ path:"/trajets", title:"Informations"});
-  },[setHeader])
+  useEffect(() => {
+    setHeader({ path: "/trajets", title: "Informations" });
+  }, [setHeader]);
 
   const [driver, setDriver] = useState({
     roleOrder: 1,
@@ -36,16 +38,34 @@ function Informations() {
 
   const handleGender = (choice) => {
     setSex(choice);
-    setDriver({ ...driver, sex: choice });
+    setProposition({
+      ...proposition,
+      drivers: {
+        ...proposition.drivers,
+        drivers: {
+          ...proposition.drivers.drivers,
+          [0]: { ...proposition.drivers.drivers[0], sex: choice }
+        }
+      }
+    });
   };
 
   const handleDriver = (e) => {
-      setDriver({...driver, [e.target.name]: e.target.value})
-  }
+    setProposition({
+      ...proposition,
+      drivers: {
+        ...proposition.drivers,
+        drivers: {
+          ...proposition.drivers.drivers,
+          [0]: { ...proposition.drivers.drivers[0], [e.target.name]: e.target.value }
+        }
+      }
+    });
+  };
 
-  const handleBirthday =(e)=> {
-      setBirthdate({...birthdate, [e.target.name]: e.target.value})
-  }
+  const handleBirthday = (e) => {
+    setBirthdate({ ...birthdate, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className={styles.informations_wrapper}>
@@ -56,19 +76,19 @@ function Informations() {
             <p>Je suis...</p>
             <div
               className={
-                sex === "male"
+                sex === "MALE"
                   ? styles.informations_avatar_m
                   : styles.informations_avatar_m_off
               }
-              onClick={() => handleGender("male")}
+              onClick={() => handleGender("MALE")}
             />
             <div
               className={
-                sex === "female"
+                sex === "FEMALE"
                   ? styles.informations_avatar_w
                   : styles.informations_avatar_w_off
               }
-              onClick={() => handleGender("female")}
+              onClick={() => handleGender("FEMALE")}
             />
           </div>
         </section>
@@ -77,14 +97,24 @@ function Informations() {
           <form>
             <div className={styles.informations_input_contener}>
               <label htmlFor="firstname">
-                <input type="text" name="firstname" id="firstname" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder}>MON PRÉNOM</div>
             </div>
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="name">
-                <input type="text" name="name" id="name" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder}>MON NOM</div>
             </div>
@@ -92,19 +122,34 @@ function Informations() {
             <div className={styles.informations_birth_wrapper}>
               <div className={styles.informations_birth_relative}>
                 <label htmlFor="day">
-                  <input type="number" name="day" id="day" onChange={(e)=> handleBirthday(e)}/>
+                  <input
+                    type="number"
+                    name="day"
+                    id="day"
+                    onChange={(e) => handleBirthday(e)}
+                  />
                 </label>
                 <div className={styles.informations_placeholder}>JJ</div>
               </div>
               <div className={styles.informations_birth_relative}>
                 <label htmlFor="month">
-                  <input type="number" name="month" id="month" onChange={(e)=> handleBirthday(e)}/>
+                  <input
+                    type="number"
+                    name="month"
+                    id="month"
+                    onChange={(e) => handleBirthday(e)}
+                  />
                 </label>
                 <div className={styles.informations_placeholder}>MM</div>
               </div>
               <div className={styles.informations_birth_relative}>
                 <label htmlFor="year">
-                  <input type="number" name="year" id="year" onChange={(e)=> handleBirthday(e)}/>
+                  <input
+                    type="number"
+                    name="year"
+                    id="year"
+                    onChange={(e) => handleBirthday(e)}
+                  />
                 </label>
                 <div className={styles.informations_placeholder}>AAAA</div>
               </div>
@@ -112,7 +157,12 @@ function Informations() {
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="telephone">
-                <input type="tel" name="telephone" id="telephone" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="tel"
+                  name="telephone"
+                  id="telephone"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder}>
                 MON NUMÉRO DE TÉLÉPHONE
@@ -121,14 +171,24 @@ function Informations() {
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="email">
-                <input type="email" name="email" id="email" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder}>EMAIL</div>
             </div>
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="address">
-                <input type="text" name="address" id="address" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder}>
                 ADRESSE POSTALE
@@ -137,56 +197,77 @@ function Informations() {
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="zip_code">
-                <input type="text" name="zip_code" id="zip_code" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="text"
+                  name="zip_code"
+                  id="zip_code"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
-              <div className={styles.informations_placeholder}>
-                CODE POSTAL
-              </div>
+              <div className={styles.informations_placeholder}>CODE POSTAL</div>
             </div>
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="city">
-                <input type="text" name="city" id="city" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder}>VILLE</div>
             </div>
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="familySituation">
-                <select name="familySituation" id="familySituation" onChange={(e)=> handleDriver(e)}>
-                  <option value="">Situation familliale</option>
-                  <option value="Celibataire">Célibataire</option>
-                  <option value="Concubin">Concubin</option>
-                  <option value="Pacse">Pacsé</option>
-                  <option value="Marie">Marié</option>
-                  <option value="Separe">Séparé</option>
-                  <option value="Divorce">Divorcé</option>
-                  <option value="Veuf">Veuf</option>
+                <select
+                  name="familySituation"
+                  id="familySituation"
+                  onChange={(e) => handleDriver(e)}
+                >
+                  <option value="UNKNOWN">Situation familliale</option>
+                  <option value="SINGLE">Célibataire</option>
+                  <option value="PARTNER">Concubin</option>
+                  <option value="CIVIL_PARTNERSHIP">Pacsé</option>
+                  <option value="MARRIED">Marié</option>
+                  <option value="SEPARATED">Séparé</option>
+                  <option value="DIVORCED">Divorcé</option>
+                  <option value="WIDOWER">Veuf</option>
                 </select>
               </label>
             </div>
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="profession">
-                <select name="profession" id="profession" onChange={(e)=> handleDriver(e)}>
-                  <option value="">Profession</option>
-                  <option value="Sans profession">Sans profession</option>
-                  <option value="Etudiant">Étudiant</option>
-                  <option value="Salarie">Salarié</option>
-                  <option value="Fonctionnaire">Fonctionnaire</option>
-                  <option value="Profession liberale">
+                <select
+                  name="profession"
+                  id="profession"
+                  onChange={(e) => handleDriver(e)}
+                >
+                  <option value="UNKNOWN">Profession</option>
+                  <option value="WITHOUT_PROFESSION profession">Sans profession</option>
+                  <option value="STUDENT">Étudiant</option>
+                  <option value="EMPLOYEE">Salarié</option>
+                  <option value="CIVIL_SERVANT">Fonctionnaire</option>
+                  <option value="LIBERAL_PROFESSION">
                     Profession libérale
                   </option>
-                  <option value="Artisan">Artisan</option>
-                  <option value="Retraite">Retraité</option>
-                  <option value="Agriculteur">Agriculteur</option>
+                  <option value="CRAFTSMAN">Artisan</option>
+                  <option value="RETIRED">Retraité</option>
+                  <option value="FARMER">Agriculteur</option>
                 </select>
               </label>
             </div>
 
             <div className={styles.informations_input_contener}>
               <label htmlFor="drivingLicenceObtainedDate">
-                <input type="date" name="drivingLicenceObtainedDate" id="drivingLicenceObtainedDate" onChange={(e)=> handleDriver(e)}/>
+                <input
+                  type="date"
+                  name="drivingLicenceObtainedDate"
+                  id="drivingLicenceObtainedDate"
+                  onChange={(e) => handleDriver(e)}
+                />
               </label>
               <div className={styles.informations_placeholder_center}>
                 Date du permis de conduire

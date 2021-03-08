@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { jourPlus2, ojd } from "../commons/convertDate";
 
 import style from "../../css/main.module.css";
 import styles from "./ownedCar.module.css";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
+
 
 function OwnedCar() {
+  const { proposition, setProposition } = useContext(PropositionContext);
   const { setHeader } = useContext(HeaderContext);
-  const [firstDate, setFirstDate] = useState("");
-  const [buyDate, setBuyDate] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [finance, setFinance] = useState("");
-  const [interrupt, setInterrupt] = useState("");
-  const [stopDate, setStopDate] = useState("");
 
   useEffect(() => {
     setHeader({
@@ -22,44 +19,48 @@ function OwnedCar() {
     });
   }, [setHeader]);
 
-  const HandleFirst = (e) => {
-    setFirstDate(e.target.value);
+  const HandleVehicle = (e) => {
+    setProposition({
+      ...proposition,
+      vehicle: { ...proposition.vehicle, [e.target.name]: e.target.value },
+    });
   };
 
-  const HandleStart = (e) => {
-    setStartDate(e.target.value);
+  const HandleBool = (choice) => {
+    setProposition({
+      ...proposition,
+      vehicle: {
+        ...proposition.vehicle,
+        hasVehiculeInsuranceSinceGetting: choice,
+      },
+    });
   };
 
-  const HandleStop = (e) => {
-    setStopDate(e.target.value);
+  const HandleDate = (e) => {
+    setProposition({
+      ...proposition,
+      vehicle: { ...proposition.vehicle, [e.target.name]: e.target.value },
+    });
   };
 
-  const HandleBuy = (e) => {
-    setBuyDate(e.target.value);
-  };
-
-  const HandleFinance = (e) => {
-    setFinance(e.target.value);
-  };
-
-  const HandleInterrupt = (choice) => {
-    setInterrupt(choice);
+  const HandleDesiredEffect = (e) => {
+    setProposition({ ...proposition, desiredEffect: e.target.value });
   };
 
   return (
     <div className={styles.owned_wrapper}>
       <form className={styles.owned_form_wrapper}>
         <div className={styles.owned_field_wrapper}>
-          <label htmlFor="first-date">
+          <label htmlFor="release">
             <input
               type="date"
-              id="first-date"
-              name="first-date"
-              value={firstDate}
+              id="release"
+              name="release"
+              value={proposition?.vehicle?.release}
               max={ojd}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-              onChange={(e) => HandleFirst(e)}
+              onChange={(e) => HandleVehicle(e)}
             />
           </label>
           <div className={styles.owned_placeholder}>
@@ -68,35 +69,35 @@ function OwnedCar() {
         </div>
 
         <div className={styles.owned_field_wrapper}>
-          <label htmlFor="buy-date">
+          <label htmlFor="getting">
             <input
               type="date"
-              id="buy-date"
-              name="buy-date"
-              value={buyDate}
+              id="getting"
+              name="getting"
+              value={proposition?.vehicle?.getting}
               max={ojd}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-              onChange={(e) => HandleBuy(e)}
+              onChange={(e) => HandleVehicle(e)}
             />
           </label>
           <div className={styles.owned_placeholder}>Date d'achat</div>
         </div>
 
         <div className={styles.owned_field_wrapper}>
-          <label htmlFor="pay-type">
+          <label htmlFor="fundingMode">
             <select
-              name="pay-type"
-              id="pay-type"
-              value={finance}
+              name="fundingMode"
+              id="fundingMode"
+              value={proposition?.vehicle.fundingMode}
               placeholder="Mode de financement"
-              onChange={(e) => HandleFinance(e)}
+              onChange={(e) => HandleVehicle(e)}
             >
-              <option>Mode de financement</option>
-              <option>Comptant</option>
-              <option>Crédit</option>
-              <option>LOA</option>
-              <option>LDD</option>
+              <option value="UNKNOWN">Mode de financement</option>
+              <option value="CASH">Comptant</option>
+              <option value="CREDIT">Crédit</option>
+              <option value="LOA">LOA</option>
+              <option value="LDD">LDD</option>
             </select>
           </label>
         </div>
@@ -108,18 +109,24 @@ function OwnedCar() {
               <p>Oui</p>
               <div
                 className={
-                  interrupt === true ? style.checkbox : style.checkbox_off
+                  proposition?.vehicle?.hasVehiculeInsuranceSinceGetting ===
+                  true
+                    ? style.checkbox
+                    : style.checkbox_off
                 }
-                onClick={() => HandleInterrupt(true)}
+                onClick={() => HandleBool(true)}
               />
             </div>
             <div className={styles.owned_field_check_wrapper}>
               <p>Non</p>
               <div
                 className={
-                  interrupt === false ? style.checkbox : style.checkbox_off
+                  proposition?.vehicle?.hasVehiculeInsuranceSinceGetting ===
+                  false
+                    ? style.checkbox
+                    : style.checkbox_off
                 }
-                onClick={() => HandleInterrupt(false)}
+                onClick={() => HandleBool(false)}
               />
             </div>
           </div>
@@ -127,36 +134,36 @@ function OwnedCar() {
 
         <div
           className={
-            interrupt === "non"
+            proposition?.vehicle?.hasVehiculeInsuranceSinceGetting === false
               ? styles.owned_field_wrapper
               : styles.owned_field_hidden
           }
         >
-          <label htmlFor="stop-date">
+          <label htmlFor="endOfInsurance">
             <input
               type="date"
-              id="stop-date"
-              name="stop-date"
-              value={stopDate}
+              id="endOfInsurance"
+              name="endOfInsurance"
+              value={proposition?.vehicle?.endOfInsurance}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-              onChange={(e) => HandleStop(e)}
+              onChange={(e) => HandleDate(e)}
             />
           </label>
           <div className={styles.owned_placeholder}>Date d'interruption</div>
         </div>
 
         <div className={styles.owned_field_wrapper}>
-          <label htmlFor="start-date">
+          <label htmlFor="desiredEffect">
             <input
               type="date"
-              id="start-date"
-              name="start-date"
-              value={startDate}
+              id="desiredEffect"
+              name="desiredEffect"
+              value={proposition?.desiredEffect}
               min={jourPlus2}
               required
               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-              onChange={(e) => HandleStart(e)}
+              onChange={(e) => HandleDesiredEffect(e)}
             />
           </label>
           <div className={styles.owned_placeholder}>
@@ -167,11 +174,14 @@ function OwnedCar() {
       <Link to="/actual-vehicule">
         <button
           className={
-            firstDate && finance && startDate && buyDate && interrupt
+            proposition.vehicle.release &&
+            proposition.vehicle.fundingMode &&
+            proposition.vehicle.getting &&
+            proposition.vehicle.hasVehiculeInsuranceSinceGetting &&
+            proposition.desiredEffect
               ? style.btn_visible
               : style.btn_hidden
           }
-          disabled={firstDate && finance && startDate ? false : true}
           type="button"
         >
           Étape suivante

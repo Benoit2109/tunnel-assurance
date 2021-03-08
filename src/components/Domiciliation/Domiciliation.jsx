@@ -7,20 +7,21 @@ import style from "../../css/main.module.css";
 import styles from "./Domiciliation.module.css";
 import cross from "../../assets/images/cross_ui.png";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
 
 function Domiciliation() {
-  const {header,setHeader} = useContext(HeaderContext);
+  const { header, setHeader } = useContext(HeaderContext);
+  const { proposition, setProposition } = useContext(PropositionContext);
   const [address, setAddress] = useState([]);
   const [findAddress, setFindAddress] = useState("");
-  
-  useEffect(()=>{
-    if(header.path==="/owned-car"){
-      setHeader({ path:"/actual-vehicule", title:"Domiciliation"});
+
+  useEffect(() => {
+    if (header.path === "/owned-car") {
+      setHeader({ path: "/actual-vehicule", title: "Domiciliation" });
     } else {
-      setHeader({ path:"/select-vehicule", title:"Domiciliation"});
+      setHeader({ path: "/select-vehicule", title: "Domiciliation" });
     }
-    
-  },[setHeader])
+  }, [setHeader, header.path]);
 
   const handleAddress = (e) => {
     if (e.target.value.length > 0) {
@@ -31,6 +32,16 @@ function Domiciliation() {
         )
         .then((res) => setFindAddress(res.data.features));
     }
+  };
+
+  const handlePostcode = () => {
+    setProposition({
+      ...proposition,
+      vehicle: {
+        ...proposition.vehicle,
+        postalCode: address[0].properties.postcode,
+      },
+    });
   };
 
   const selectAddress = (e) => {
@@ -71,7 +82,7 @@ function Domiciliation() {
       <Map className={styles.dom_map_wrapper} address={address} />
 
       <Link to="/trajets">
-        <button className={style.btn_visible}>Étape suivante</button>
+        <button className={style.btn_visible} onClick={()=>handlePostcode()}>Étape suivante</button>
       </Link>
 
       <div

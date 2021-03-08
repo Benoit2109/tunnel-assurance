@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import style from "../../css/main.module.css";
 import styles from "./Trajets.module.css";
@@ -8,32 +8,42 @@ import suitcase from "../../assets/images/trajet_pro.png";
 import check from "../../assets/images/checkmark.png";
 import { Link } from "react-router-dom";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
 
 function Trajets() {
-  const {setHeader} = useContext(HeaderContext);
-  const [trajet, setTrajet] = useState("");
-  const [garage, setGarage] = useState("");
-  const [principal, setPrincipal] = useState("");
-  const [titulaire, setTitulaire] = useState("");
+  const { setHeader } = useContext(HeaderContext);
+  const { proposition, setProposition } = useContext(PropositionContext);
 
-  useEffect(()=>{
-    setHeader({ path:"/domiciliation", title:"Vos trajets"});
-  },[setHeader])
+  useEffect(() => {
+    setHeader({ path: "/domiciliation", title: "Vos trajets" });
+  }, [setHeader]);
 
   const handleTrajet = (choice) => {
-    setTrajet(choice);
+    setProposition({
+      ...proposition,
+      vehicle: { ...proposition.vehicle, use: choice },
+    });
   };
 
   const handleGarage = (choice) => {
-    setGarage(choice);
+    setProposition({
+      ...proposition,
+      vehicle: { ...proposition.vehicle, garageMode: choice },
+    });
   };
 
   const handlePrincipal = (choice) => {
-    setPrincipal(choice);
+    setProposition({
+      ...proposition,
+      drivers: { ...proposition.drivers, driverGroupType: choice },
+    });
   };
 
   const handleTitulaire = (choice) => {
-    setTitulaire(choice);
+    setProposition({
+      ...proposition,
+      drivers: { ...proposition.drivers, grayCardOwnerType: choice },
+    });
   };
 
   return (
@@ -42,11 +52,13 @@ function Trajets() {
       <div className={styles.trajet_card_contener}>
         <div
           className={styles.trajet_card_template}
-          onClick={() => handleTrajet("choice1")}
+          onClick={() => handleTrajet("PRIVATE")}
         >
           <p
             className={
-              trajet === "choice1" ? styles.trajet_p_selected : styles.trajet_p
+              proposition?.vehicle?.use === "PRVATE"
+                ? styles.trajet_p_selected
+                : styles.trajet_p
             }
           >
             Des trajets privés uniquement
@@ -55,7 +67,7 @@ function Trajets() {
         </div>
         <img
           className={
-            trajet === "choice1"
+            proposition?.vehicle?.use === "PRIVATE"
               ? styles.trajet_check_on
               : styles.trajet_check_off
           }
@@ -67,11 +79,13 @@ function Trajets() {
       <div className={styles.trajet_card_contener}>
         <div
           className={styles.trajet_card_template}
-          onClick={() => handleTrajet("choice2")}
+          onClick={() => handleTrajet("PRIVATE_AND_TRIP")}
         >
           <p
             className={
-              trajet === "choice2" ? styles.trajet_p_selected : styles.trajet_p
+              proposition?.vehicle?.use === "PRIVATE_AND_TRIP"
+                ? styles.trajet_p_selected
+                : styles.trajet_p
             }
           >
             Des trajets privés et domicile/travail
@@ -80,7 +94,7 @@ function Trajets() {
         </div>
         <img
           className={
-            trajet === "choice2"
+            proposition?.vehicle?.use === "PRIVATE_AND_TRIP"
               ? styles.trajet_check_on
               : styles.trajet_check_off
           }
@@ -92,11 +106,13 @@ function Trajets() {
       <div className={styles.trajet_card_contener}>
         <div
           className={styles.trajet_card_template}
-          onClick={() => handleTrajet("choice3")}
+          onClick={() => handleTrajet("PRIVATE AND BUSINESS")}
         >
           <p
             className={
-              trajet === "choice3" ? styles.trajet_p_selected : styles.trajet_p
+              proposition?.vehicle?.use === "PRIVATE_AND_BUSINESS"
+                ? styles.trajet_p_selected
+                : styles.trajet_p
             }
           >
             Des trajets privés et pour le travail
@@ -105,7 +121,7 @@ function Trajets() {
         </div>
         <img
           className={
-            trajet === "choice3"
+            proposition?.vehicle?.use === "PRIVATE_AND_BUSINESS"
               ? styles.trajet_check_on
               : styles.trajet_check_off
           }
@@ -121,33 +137,33 @@ function Trajets() {
             <p>Rue ou parking public</p>
             <div
               className={
-                garage === "choice1"
+                proposition?.vehicle?.garageMode === "PUBLIC_AREA"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleGarage("choice1")}
+              onClick={() => handleGarage("PUBLIC_AREA")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>
             <p>Parking collectif clos</p>
             <div
               className={
-                garage === "choice2"
+                proposition?.vehicle?.garageMode === "PRIVATE_AREA"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleGarage("choice2")}
+              onClick={() => handleGarage("PRIVATE_AREA")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>
             <p>Box privé ou garage</p>
             <div
               className={
-                garage === "choice3"
+                proposition?.vehicle?.garageMode === "GARAGE_OR_BOX"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleGarage("choice3")}
+              onClick={() => handleGarage("GARAGE_OR_BOX")}
             />
           </div>
         </div>
@@ -158,33 +174,34 @@ function Trajets() {
             <p>Vous</p>
             <div
               className={
-                principal === "choice1"
+                proposition?.drivers?.driverGroupType === "MYSELF"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handlePrincipal("choice1")}
+              onClick={() => handlePrincipal("MYSELF")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>
             <p>Vous et votre conjoint</p>
             <div
               className={
-                principal === "choice2"
+                proposition?.drivers?.driverGroupType === "MY_PARTNER_AND_I"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handlePrincipal("choice2")}
+              onClick={() => handlePrincipal("MY_PARTNER_AND_I")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>
             <p>Vous et un enfant</p>
             <div
               className={
-                principal === "choice3"
+                proposition?.drivers?.driverGroupType ===
+                "ONE_OF_MY_CHILDREN_AND_I"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handlePrincipal("choice3")}
+              onClick={() => handlePrincipal("ONE_OF_MY_CHILDREN_AND_I")}
             />
           </div>
         </div>
@@ -195,40 +212,53 @@ function Trajets() {
             <p>Vous</p>
             <div
               className={
-                titulaire === "choice1"
+                proposition?.drivers?.grayCardOwnerType === "SUSCRIBER"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleTitulaire("choice1")}
+              onClick={() => handleTitulaire("SUSCRIBER")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>
             <p>Vous et votre conjoint</p>
             <div
               className={
-                titulaire === "choice2"
+                proposition?.drivers?.grayCardOwnerType ===
+                "SUBSCRIBER_OR_IT_PARTNER"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleTitulaire("choice2")}
+              onClick={() => handleTitulaire("SUBSCRIBER_OR_IT_PARTNER")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>
             <p>Société de leasing</p>
             <div
               className={
-                titulaire === "choice3"
+                proposition?.drivers?.grayCardOwnerType ===
+                "LEASING_OR_CREDIT_COMPANY"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleTitulaire("choice3")}
+              onClick={() => handleTitulaire("LEASING_OR_CREDIT_COMPANY")}
             />
           </div>
         </div>
       </div>
 
       <Link to="/informations">
-        <button className={trajet && garage && principal && titulaire? style.btn_visible : style.btn_hidden}>Étape suivante</button>
+        <button
+          className={
+            proposition.vehicle.use &&
+            proposition.vehicle.garageMode &&
+            proposition.drivers.driverGroupType &&
+            proposition.drivers.grayCardOwnerType
+              ? style.btn_visible
+              : style.btn_hidden
+          }
+        >
+          Étape suivante
+        </button>
       </Link>
     </div>
   );

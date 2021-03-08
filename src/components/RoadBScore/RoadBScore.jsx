@@ -1,21 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import IframeResizer from 'iframe-resizer-react';
+import IframeResizer from "iframe-resizer-react";
 
 import styles from "./RoadBScore.module.css";
 import style from "../../css/main.module.css";
 import { HeaderContext } from "../../Contexts/headerContext";
+import { PropositionContext } from "../../Contexts/PropositionContext";
 
 function RoadBScore() {
-  const {setHeader} = useContext(HeaderContext);
-  const [rbscore, setRbscore] = useState("AAAAAAAAAAAAAAAAAAAA");
+  const { setHeader } = useContext(HeaderContext);
+  const { proposition, setProposition } = useContext(PropositionContext);
 
-  useEffect(()=>{
-    setHeader({ path:"/", title:"Road-B-Score ®"});
-  },[setHeader])
+  useEffect(() => {
+    setHeader({ path: "/", title: "Road-B-Score ®" });
+  }, [setHeader, proposition.codeRBS]);
 
   const handleChange = (e) => {
-    setRbscore(e.target.value);
+    setProposition({ ...proposition, codeRBS: e.target.value });
   };
 
   const RBSlink = "https://www.road-b-score.com/";
@@ -24,12 +25,18 @@ function RoadBScore() {
     <div className={styles.rbs_wrapper}>
       <div className={styles.rbs_contener}>
         <p>Pour bénéficier de l'assurance jeune conducteur</p>
-        <p className={styles.rbs_p_nomarginB}>vous devez passer le test Road-B-Score ®</p>
+        <p className={styles.rbs_p_nomarginB}>
+          vous devez passer le test Road-B-Score ®
+        </p>
         <p className={styles.rbs_text_highlight}>Attention</p>
         <p className={styles.rbs_p_nomargin}>Tu n'as qu'un essai</p>
         <p className={styles.rbs_p_nomargin}>Le test dure environ 10 minutes</p>
-        <p className={styles.rbs_p_nomargin}>Conserve bien le code qui va t'être donné</p>
-        <p className={styles.rbs_p_nomargin}>Bon courage et à tout de suite !</p>
+        <p className={styles.rbs_p_nomargin}>
+          Conserve bien le code qui va t'être donné
+        </p>
+        <p className={styles.rbs_p_nomargin}>
+          Bon courage et à tout de suite !
+        </p>
         <a href={RBSlink}>
           <div className={styles.rbs_btn_test}>PASSER LE TEST</div>
         </a>
@@ -39,23 +46,25 @@ function RoadBScore() {
           <label htmlFor="RBScore">
             <input
               className={styles.rbs_input_text}
-              name="RBscore"
+              name="RBScore"
               type="text"
-              value={rbscore}
+              value={proposition?.codeRBS}
               placeholder="ABCDEFG/+33600000000"
+              pattern="[A-Za-z]{7}/+[0-9]{11}"
+              title="le code RBS est une combinaison du type ABCDEFG/+33600000000"
               onChange={(e) => handleChange(e)}
             />
           </label>
           <Link to="/vehicule-condition" className={styles.rbs_link}>
             <input
               className={
-                rbscore && rbscore.length === 20
+                proposition?.codeRBS?.length === 20
                   ? style.btn_visible
                   : style.btn_hidden
               }
               type="submit"
               value="Continuer"
-              disabled={rbscore && rbscore.length === 20 ? false : true}
+              disabled={proposition?.codeRBS?.length === 20 ? false : true}
             />
           </Link>
         </form>
