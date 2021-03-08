@@ -93,6 +93,7 @@ function Informations() {
                   type="text"
                   name="firstname"
                   id="firstname"
+                  value={proposition?.drivers?.drivers[0]?.firstname}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -105,6 +106,7 @@ function Informations() {
                   type="text"
                   name="name"
                   id="name"
+                  value={proposition?.drivers?.drivers[0]?.name}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -131,6 +133,7 @@ function Informations() {
                   type="tel"
                   name="telephone"
                   id="telephone"
+                  value={proposition?.drivers?.drivers[0]?.telephone}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -145,6 +148,7 @@ function Informations() {
                   type="email"
                   name="email"
                   id="email"
+                  value={proposition?.drivers?.drivers[0]?.email}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -157,6 +161,7 @@ function Informations() {
                   type="text"
                   name="address"
                   id="address"
+                  value={proposition?.drivers?.drivers[0]?.address}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -171,6 +176,7 @@ function Informations() {
                   type="text"
                   name="zip_code"
                   id="zip_code"
+                  value={proposition?.drivers?.drivers[0]?.zip_code}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -183,6 +189,7 @@ function Informations() {
                   type="text"
                   name="city"
                   id="city"
+                  value={proposition?.drivers?.drivers[0]?.city}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -194,6 +201,7 @@ function Informations() {
                 <select
                   name="familySituation"
                   id="familySituation"
+                  value={proposition?.drivers?.drivers[0]?.familySituation}
                   onChange={(e) => handleDriver(e)}
                 >
                   <option value="UNKNOWN">Situation familliale</option>
@@ -213,6 +221,7 @@ function Informations() {
                 <select
                   name="profession"
                   id="profession"
+                  value={proposition?.drivers?.drivers[0]?.profession}
                   onChange={(e) => handleDriver(e)}
                 >
                   <option value="UNKNOWN">Profession</option>

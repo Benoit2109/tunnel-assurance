@@ -36,8 +36,8 @@ function Antecedants() {
     MalusList();
   }, [setHeader]);
 
-  const HandleBonusMalus = (e) =>{
-    if (0 <= e.target.value <= 6){
+  const HandleBonusMalus = (e) => {
+    if (0 <= e.target.value <= 6) {
       setProposition({
         ...proposition,
         drivers: {
@@ -48,29 +48,32 @@ function Antecedants() {
               ...proposition.drivers.drivers[0],
               previousInsurance: {
                 ...proposition.drivers.drivers[0].previousInsurance,
-                bonusMalus: 50, bonusSenorityYears:parseInt(e.target.value)
+                bonusMalus: 50,
+                bonusSenorityYears: parseInt(e.target.value),
               },
             },
           },
         },
       });
-    } else {setProposition({
-      ...proposition,
-      drivers: {
-        ...proposition.drivers,
+    } else {
+      setProposition({
+        ...proposition,
         drivers: {
-          ...proposition.drivers.drivers,
-          [0]: {
-            ...proposition.drivers.drivers[0],
-            previousInsurance: {
-              ...proposition.drivers.drivers[0].previousInsurance,
-              [e.target.name]: e.target.value,
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              previousInsurance: {
+                ...proposition.drivers.drivers[0].previousInsurance,
+                [e.target.name]: e.target.value,
+              },
             },
           },
         },
-      },
-    });}
-  }
+      });
+    }
+  };
 
   const handleInsured = (e) => {
     setProposition({
@@ -112,13 +115,22 @@ function Antecedants() {
 
   const SubmitProposition = () => {
     const Token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ2OTQ5NTYsInJvbGUiOiJbXCJBZG1pbmlzdHJhdG9yc1wiLFwiUmVnaXN0ZXJlZCBVc2Vyc1wiLFwiU3Vic2NyaWJlcnNcIl0iLCJuYW1laWQiOiI1MDQiLCJ1bmlxdWVfbmFtZSI6Imp1bGllbiB0ZXN0IiwibmJmIjoxNjE0NjA4NTU2LCJpc3MiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8iLCJhdWQiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8ifQ.FGdwGt2p6aXEGWEb0RMnunqu9CGQR1vIZNFxRSBHniQ`;
-    axios.post("https://testdriving.good-angel.fr/api/Insurance/Propositions",
-    { headers: { Authorization: `Bearer ${Token}` } }
-  )
-  .then((res) => res.data)
-  .then((res) => {
-    console.log(res);
-  })};
+    axios
+      .post(
+        "https://testdriving.good-angel.fr/api/Insurance/Propositions",
+        proposition,
+        {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      )
+      .then((res) => res.data)
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <div className={styles.ante_wrapper}>
@@ -126,37 +138,23 @@ function Antecedants() {
         <form>
           <select name="bonusMalus" onChange={(e) => HandleBonusMalus(e)}>
             <option>Sélectionner votre bonus/malus</option>
-            <option value="6">
-              0.50 soit 50% de bonus, depuis + de 6 ans
-            </option>
-            <option value="5">
-              0.50 soit 50% de bonus, depuis 5 à 6 ans
-            </option>
-            <option value="4">
-              0.50 soit 50% de bonus, depuis 4 à 5 ans
-            </option>
-            <option value="3">
-              0.50 soit 50% de bonus, depuis 3 à 4 ans
-            </option>
-            <option value="2">
-              0.50 soit 50% de bonus, depuis 2 à 3 ans
-            </option>
-            <option value="1">
-              0.50 soit 50% de bonus, depuis 1 à 2 ans
-            </option>
-            <option value="0">
-              0.50 soit 50% de bonus, depuis - de 1 an
-            </option>
+            <option value="6">0.50 soit 50% de bonus, depuis + de 6 ans</option>
+            <option value="5">0.50 soit 50% de bonus, depuis 5 à 6 ans</option>
+            <option value="4">0.50 soit 50% de bonus, depuis 4 à 5 ans</option>
+            <option value="3">0.50 soit 50% de bonus, depuis 3 à 4 ans</option>
+            <option value="2">0.50 soit 50% de bonus, depuis 2 à 3 ans</option>
+            <option value="1">0.50 soit 50% de bonus, depuis 1 à 2 ans</option>
+            <option value="0">0.50 soit 50% de bonus, depuis - de 1 an</option>
             {bonus &&
               bonus.map((el) => (
-                <option value={el*100} id={el}>
+                <option value={el * 100} id={el}>
                   {el} soit {Math.floor(100 - el * 100)}% de bonus
                 </option>
               ))}
             <option value="100">1.00 soit 0% ni bonus, ni malus</option>
             {malus &&
               malus.map((el) => (
-                <option value={el*100} id={el}>
+                <option value={el * 100} id={el}>
                   {el} soit {Math.floor(el * 100 - 100)}% de malus
                 </option>
               ))}
@@ -182,9 +180,10 @@ function Antecedants() {
           </select>
           <div
             className={
-              (proposition?.drivers?.drivers[0]?.previousInsurance
-                ?.insuranceSeniority !== "UNKNOWN") && (proposition?.drivers?.drivers[0]?.previousInsurance
-                ?.insuranceSeniority !== "NO_NEVER_INSURED") 
+              proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.insuranceSeniority !== "UNKNOWN" &&
+              proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.insuranceSeniority !== "NO_NEVER_INSURED"
                 ? styles.ante_input_wrapper
                 : styles.ante_input_wrapper_off
             }
@@ -217,7 +216,7 @@ function Antecedants() {
                 <div
                   className={
                     proposition?.drivers?.drivers[0]?.previousInsurance
-                ?.hasInsuranceTerminate === true
+                      ?.hasInsuranceTerminate === true
                       ? style.checkbox
                       : style.checkbox_off
                   }
@@ -229,7 +228,7 @@ function Antecedants() {
                 <div
                   className={
                     proposition?.drivers?.drivers[0]?.previousInsurance
-                ?.hasInsuranceTerminate === false
+                      ?.hasInsuranceTerminate === false
                       ? style.checkbox
                       : style.checkbox_off
                   }
@@ -239,10 +238,10 @@ function Antecedants() {
             </div>
             <div
               className={
-                (proposition?.drivers?.drivers[0]?.previousInsurance
-                  ?.hasInsuranceTerminate === false) ||
-                  (proposition?.drivers?.drivers[0]?.previousInsurance
-                  ?.hasInsuranceTerminate === "UNKNOWN")
+                proposition?.drivers?.drivers[0]?.previousInsurance
+                  ?.hasInsuranceTerminate === false ||
+                proposition?.drivers?.drivers[0]?.previousInsurance
+                  ?.hasInsuranceTerminate === "UNKNOWN"
                   ? styles.ante_resilied_section_off
                   : ""
               }
@@ -272,7 +271,12 @@ function Antecedants() {
         </form>
       </section>
       <Link to="#">
-        <button className={style.btn_visible} onClick={()=> SubmitProposition()}>Étape suivante</button>
+        <button
+          className={style.btn_visible}
+          onClick={() => SubmitProposition()}
+        >
+          Étape suivante
+        </button>
       </Link>
     </div>
   );
