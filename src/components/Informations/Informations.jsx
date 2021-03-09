@@ -2,21 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HeaderContext } from "../../Contexts/headerContext";
 import { PropositionContext } from "../../Contexts/PropositionContext";
-import {apiDate} from '../commons/convertDate';
+import { apiDate } from "../commons/convertDate";
 
 import style from "../../css/main.module.css";
 import styles from "./Informations.module.css";
+import { MainDriverContext } from "../../Contexts/MainDriverContext";
 
 function Informations() {
   const { setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
+  const { mainDriver, setMainDriver} = useContext(MainDriverContext);
   const [sex, setSex] = useState("");
-
 
   useEffect(() => {
     setHeader({ path: "/trajets", title: "Informations" });
   }, [setHeader]);
-
 
   const handleGender = (choice) => {
     setSex(choice);
@@ -26,11 +26,15 @@ function Informations() {
         ...proposition.drivers,
         drivers: {
           ...proposition.drivers.drivers,
-          [0]: { ...proposition.drivers.drivers[0], sex: choice }
-        }
-      }
+          [0]: { ...proposition.drivers.drivers[0], sex: choice },
+        },
+      },
     });
   };
+
+  const handleMainDriver =(e)=> {
+    setMainDriver({...mainDriver, [e.target.name]: e.target.value})
+  }
 
   const handleDriver = (e) => {
     setProposition({
@@ -39,10 +43,45 @@ function Informations() {
         ...proposition.drivers,
         drivers: {
           ...proposition.drivers.drivers,
-          [0]: { ...proposition.drivers.drivers[0], [e.target.name]: e.target.value }
-        }
-      }
+          [0]: {
+            ...proposition.drivers.drivers[0],
+            [e.target.name]: e.target.value,
+          },
+        },
+      },
     });
+  };
+
+  const handleAAC = (e) => {
+    if (e.target.value === "true") {
+      setProposition({
+        ...proposition,
+        drivers: {
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              accompaniedDriving: true,
+            },
+          },
+        },
+      });
+    } else {
+      setProposition({
+        ...proposition,
+        drivers: {
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              accompaniedDriving: false,
+            },
+          },
+        },
+      });
+    }
   };
 
   const handleDate = (e) => {
@@ -52,12 +91,15 @@ function Informations() {
         ...proposition.drivers,
         drivers: {
           ...proposition.drivers.drivers,
-          [0]: { ...proposition.drivers.drivers[0], [e.target.name]: apiDate(e.target.value) }
-        }
-      }
+          [0]: {
+            ...proposition.drivers.drivers[0],
+            [e.target.name]: apiDate(e.target.value),
+          },
+        },
+      },
     });
+    setMainDriver({...mainDriver, [e.terget.name]:e.target.value})
   };
-
 
   return (
     <div className={styles.informations_wrapper}>
@@ -93,8 +135,8 @@ function Informations() {
                   type="text"
                   name="firstname"
                   id="firstname"
-                  value={proposition?.drivers?.drivers[0]?.firstname}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.firstname}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>MON PRÉNOM</div>
@@ -106,8 +148,8 @@ function Informations() {
                   type="text"
                   name="name"
                   id="name"
-                  value={proposition?.drivers?.drivers[0]?.name}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.name}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>MON NOM</div>
@@ -133,8 +175,8 @@ function Informations() {
                   type="tel"
                   name="telephone"
                   id="telephone"
-                  value={proposition?.drivers?.drivers[0]?.telephone}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.telephone}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>
@@ -148,8 +190,8 @@ function Informations() {
                   type="email"
                   name="email"
                   id="email"
-                  value={proposition?.drivers?.drivers[0]?.email}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.email}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>EMAIL</div>
@@ -161,8 +203,8 @@ function Informations() {
                   type="text"
                   name="address"
                   id="address"
-                  value={proposition?.drivers?.drivers[0]?.address}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.address}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>
@@ -176,8 +218,8 @@ function Informations() {
                   type="text"
                   name="zip_code"
                   id="zip_code"
-                  value={proposition?.drivers?.drivers[0]?.zip_code}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.zip_code}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>CODE POSTAL</div>
@@ -189,8 +231,8 @@ function Informations() {
                   type="text"
                   name="city"
                   id="city"
-                  value={proposition?.drivers?.drivers[0]?.city}
-                  onChange={(e) => handleDriver(e)}
+                  value={mainDriver?.city}
+                  onChange={(e) => handleMainDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>VILLE</div>
@@ -251,6 +293,25 @@ function Informations() {
               <div className={styles.informations_placeholder_center}>
                 Date du permis de conduire
               </div>
+            </div>
+
+            <div className={styles.informations_input_contener}>
+              <label htmlFor="accompaniedDriving">
+                <select
+                  name="accompaniedDriving"
+                  id="accompaniedDriving"
+                  value={proposition?.drivers?.drivers[0]?.accompaniedDriving}
+                  onChange={(e) => handleAAC(e)}
+                >
+                  <option value="UNKNOWN">Avez vous fait AAC ?</option>
+                  <option value="true">
+                    J'ai fait la conduite accompagnée
+                  </option>
+                  <option value="false">
+                    Je n'ai pas fait la conduite accompagnée
+                  </option>
+                </select>
+              </label>
             </div>
           </form>
         </div>

@@ -8,10 +8,12 @@ import styles from "./Domiciliation.module.css";
 import cross from "../../assets/images/cross_ui.png";
 import { HeaderContext } from "../../Contexts/headerContext";
 import { PropositionContext } from "../../Contexts/PropositionContext";
+import { MainDriverContext } from "../../Contexts/MainDriverContext";
 
 function Domiciliation() {
   const { header, setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
+  const { mainDriver, setMainDriver } = useContext(MainDriverContext);
   const [address, setAddress] = useState([]);
   const [findAddress, setFindAddress] = useState("");
 
@@ -34,13 +36,18 @@ function Domiciliation() {
     }
   };
 
-  const handlePostcode = () => {
+  const handleFullAddress = () => {
     setProposition({
       ...proposition,
       vehicle: {
         ...proposition.vehicle,
         postalCode: address[0].properties.postcode,
       },
+    });
+    setMainDriver({...mainDriver,
+      address: address[0].properties.name,
+      zip_code: address[0].properties.postcode,
+      city: address[0].properties.city,
     });
   };
 
@@ -82,7 +89,12 @@ function Domiciliation() {
       <Map className={styles.dom_map_wrapper} address={address} />
 
       <Link to="/trajets">
-        <button className={style.btn_visible} onClick={()=>handlePostcode()}>Étape suivante</button>
+        <button
+          className={style.btn_visible}
+          onClick={() => handleFullAddress()}
+        >
+          Étape suivante
+        </button>
       </Link>
 
       <div

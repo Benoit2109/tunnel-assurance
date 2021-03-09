@@ -188,6 +188,8 @@ function Antecedants() {
                 : styles.ante_input_wrapper_off
             }
           >
+            <div className={proposition?.drivers?.drivers[0]?.previousInsurance
+                ?.insuranceSeniority === "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE"? style.btn_hidden:""}>
             <p>Nombre de mois d'assurance depuis le {lastYear}</p>
             <label htmlFor="insuranceMonths">
               <input
@@ -197,6 +199,7 @@ function Antecedants() {
                 id="insuranceMonths"
               />
             </label>
+            </div>
             <label htmlFor="lastInsuranceName">
               <input
                 onChange={(e) => handleInsured(e)}

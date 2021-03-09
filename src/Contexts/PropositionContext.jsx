@@ -17,7 +17,7 @@ const PropositionProvider = ({ children }) => {
       endOfInsurance: "2021-03-05T07:59:10.788Z",
       fundingMode: "UNKNOWN",
       getting: "2021-03-05T07:59:10.788Z",
-      sraCode: "string",
+      sraCode: "FO08775",
       garageMode: "UNKNOWN",
       hasProtectionSystem: false,
       hasTrackingSystem: false,
@@ -34,13 +34,13 @@ const PropositionProvider = ({ children }) => {
       exclusiveCoupleDriving: false,
       drivers: [
         {
-          roleOrder: "UNKNOWN",
+          roleOrder: "MAIN",
           sex: "UNKNOWN",
           birthDate: "2021-03-05T07:59:10.788Z",
           familySituation: "UNKNOWN",
           profession: "UNKNOWN",
           drivingLicenceObtainedDate: "2021-03-05T07:59:10.788Z",
-          accompaniedDriving: true,
+          accompaniedDriving: false,
           previousInsurance: {
             bonusMalus: 0,
             bonusSenorityYears: 0,
@@ -81,7 +81,7 @@ const PropositionProvider = ({ children }) => {
       ],
     },
     desiredEffect: "",
-    codeRBS: "",
+    codeRBS: "PYJWRNA/+33781297447",
   });
 
   return (
