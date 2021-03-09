@@ -30,7 +30,7 @@ function Map({ address }) {
         />
         {address &&
           address.map((e) => (
-            <Marker position={[e.geometry.coordinates[1], e.geometry.coordinates[0]]} icon={DefaultIcon}>
+            <Marker id={e.geometry.coordinates[1]} position={[e.geometry.coordinates[1], e.geometry.coordinates[0]]} icon={DefaultIcon}>
               <Popup>{e.properties.label}</Popup>
             </Marker>
           ))}

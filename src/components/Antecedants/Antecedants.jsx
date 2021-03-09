@@ -138,23 +138,23 @@ function Antecedants() {
         <form>
           <select name="bonusMalus" onChange={(e) => HandleBonusMalus(e)}>
             <option>Sélectionner votre bonus/malus</option>
-            <option value="6">0.50 soit 50% de bonus, depuis + de 6 ans</option>
-            <option value="5">0.50 soit 50% de bonus, depuis 5 à 6 ans</option>
-            <option value="4">0.50 soit 50% de bonus, depuis 4 à 5 ans</option>
-            <option value="3">0.50 soit 50% de bonus, depuis 3 à 4 ans</option>
-            <option value="2">0.50 soit 50% de bonus, depuis 2 à 3 ans</option>
-            <option value="1">0.50 soit 50% de bonus, depuis 1 à 2 ans</option>
-            <option value="0">0.50 soit 50% de bonus, depuis - de 1 an</option>
+            <option id="6" value="6">0.50 soit 50% de bonus, depuis + de 6 ans</option>
+            <option id="5" value="5">0.50 soit 50% de bonus, depuis 5 à 6 ans</option>
+            <option id="4" value="4">0.50 soit 50% de bonus, depuis 4 à 5 ans</option>
+            <option id="3" value="3">0.50 soit 50% de bonus, depuis 3 à 4 ans</option>
+            <option id="2" value="2">0.50 soit 50% de bonus, depuis 2 à 3 ans</option>
+            <option id="1" value="1">0.50 soit 50% de bonus, depuis 1 à 2 ans</option>
+            <option id="0" value="0">0.50 soit 50% de bonus, depuis - de 1 an</option>
             {bonus &&
               bonus.map((el) => (
-                <option value={el * 100} id={el}>
+                <option value={el * 100} id={el*100}>
                   {el} soit {Math.floor(100 - el * 100)}% de bonus
                 </option>
               ))}
-            <option value="100">1.00 soit 0% ni bonus, ni malus</option>
+            <option id="100" value="100">1.00 soit 0% ni bonus, ni malus</option>
             {malus &&
               malus.map((el) => (
-                <option value={el * 100} id={el}>
+                <option value={el * 100} id={el*100}>
                   {el} soit {Math.floor(el * 100 - 100)}% de malus
                 </option>
               ))}

@@ -98,7 +98,7 @@ function Informations() {
         },
       },
     });
-    setMainDriver({...mainDriver, [e.terget.name]:e.target.value})
+    setMainDriver({...mainDriver, [e.target.name]:e.target.value})
   };
 
   return (
