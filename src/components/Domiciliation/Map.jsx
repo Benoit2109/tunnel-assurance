@@ -28,10 +28,10 @@ function Map({ address }) {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=33a48696f2324df5807babc5240f8605"
         />
-        {address &&
-          address.map((e) => (
-            <Marker id={e.geometry.coordinates[1]} position={[e.geometry.coordinates[1], e.geometry.coordinates[0]]} icon={DefaultIcon}>
-              <Popup>{e.properties.label}</Popup>
+        {
+          address && address.map((el) => (
+            <Marker key={el.properties.id} position={[el.geometry.coordinates[1], el.geometry.coordinates[0]]} icon={DefaultIcon}>
+              <Popup>{el.properties.label}</Popup>
             </Marker>
           ))}
       </MapContainer>
@@ -42,5 +42,5 @@ function Map({ address }) {
 export default Map;
 
 Map.propTypes = {
-  address: PropTypes.arrayOf(PropTypes.string).isRequired,
+  address: PropTypes.arrayOf(PropTypes.object).isRequired,
 }

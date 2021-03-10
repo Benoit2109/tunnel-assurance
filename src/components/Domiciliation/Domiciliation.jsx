@@ -15,7 +15,7 @@ function Domiciliation() {
   const { proposition, setProposition } = useContext(PropositionContext);
   const { mainDriver, setMainDriver } = useContext(MainDriverContext);
   const [address, setAddress] = useState([]);
-  const [findAddress, setFindAddress] = useState("");
+  const [findAddress, setFindAddress] = useState([]);
 
   useEffect(() => {
     if (header.path === "/owned-car") {
@@ -32,7 +32,9 @@ function Domiciliation() {
         .get(
           `https://api-adresse.data.gouv.fr/search/?q=${fetchAddress}&limit=10`
         )
-        .then((res) => setFindAddress(res.data.features));
+        .then((res) => {
+          console.log(res.data.features);
+          setFindAddress(res.data.features)});
     }
   };
 
@@ -42,6 +44,7 @@ function Domiciliation() {
       vehicle: {
         ...proposition.vehicle,
         postalCode: address[0].properties.postcode,
+        city: address[0].properties.city
       },
     });
     setMainDriver({...mainDriver,
@@ -53,6 +56,7 @@ function Domiciliation() {
 
   const selectAddress = (e) => {
     setAddress([findAddress.find((el) => el.properties.id === e.target.id)]);
+    console.log("address",address);
     setFindAddress("");
   };
 
@@ -65,11 +69,11 @@ function Domiciliation() {
       <div>
         <form className={styles.dom_form_wrapper}>
           <div className={styles.dom_field_wrapper}>
-            <label htmlFor="adresse">
+            <label htmlFor="address">
               <input
                 type="text"
-                name="adresse"
-                id="adresse"
+                name="address"
+                key="address"
                 onChange={(e) => handleAddress(e)}
                 value={address ? address[0]?.properties.label : ""}
               />
@@ -107,7 +111,7 @@ function Domiciliation() {
         <ul>
           {findAddress &&
             findAddress.map((e) => (
-              <li id={e.properties.id} onClick={(e) => selectAddress(e)}>
+              <li key={e.properties.id} id={e.properties.id} onClick={(e) => selectAddress(e)}>
                 {e.properties.label}
               </li>
             ))}

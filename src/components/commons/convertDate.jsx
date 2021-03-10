@@ -32,7 +32,7 @@ export function apiDate(inputFormat) {
     return s < 10 ? "0" + s : s;
   }
   var d = new Date(inputFormat);
-  return `${[d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-")}T07:59:10.788Z`;
+  return `${[d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-")}T07:59:10`;
 }
 
 export const jourPlus2 = convertDate(AftTmw);

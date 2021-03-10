@@ -212,11 +212,11 @@ function Trajets() {
             <p>Vous</p>
             <div
               className={
-                proposition?.drivers?.grayCardOwnerType === "SUSCRIBER"
+                proposition?.drivers?.grayCardOwnerType === "SUBSCRIBER"
                   ? style.checkbox
                   : style.checkbox_off
               }
-              onClick={() => handleTitulaire("SUSCRIBER")}
+              onClick={() => handleTitulaire("SUBSCRIBER")}
             />
           </div>
           <div className={styles.trajet_prop_wrapper}>

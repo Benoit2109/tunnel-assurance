@@ -54,7 +54,7 @@ function OwnedCar() {
           <label htmlFor="release">
             <input
               type="date"
-              id="release"
+              key="release"
               name="release"
               max={ojd}
               pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
@@ -71,7 +71,7 @@ function OwnedCar() {
           <label htmlFor="getting">
             <input
               type="date"
-              id="getting"
+              key="getting"
               name="getting"
               max={ojd}
               pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
@@ -86,7 +86,7 @@ function OwnedCar() {
           <label htmlFor="fundingMode">
             <select
               name="fundingMode"
-              id="fundingMode"
+              key="fundingMode"
               value={proposition?.vehicle.fundingMode}
               placeholder="Mode de financement"
               onChange={(e) => HandleVehicle(e)}
@@ -140,7 +140,7 @@ function OwnedCar() {
           <label htmlFor="endOfInsurance">
             <input
               type="date"
-              id="endOfInsurance"
+              key="endOfInsurance"
               name="endOfInsurance"
               pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"
               title="veuillez respecter le format de saisie de la date"
@@ -154,7 +154,7 @@ function OwnedCar() {
           <label htmlFor="desiredEffect">
             <input
               type="date"
-              id="desiredEffect"
+              key="desiredEffect"
               name="desiredEffect"
               min={jourPlus2}
               pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"

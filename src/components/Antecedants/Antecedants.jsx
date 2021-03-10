@@ -37,7 +37,7 @@ function Antecedants() {
   }, [setHeader]);
 
   const HandleBonusMalus = (e) => {
-    if (0 <= e.target.value <= 6) {
+    if (parseInt(e.target.value) <= 6) {
       setProposition({
         ...proposition,
         drivers: {
@@ -66,7 +66,8 @@ function Antecedants() {
               ...proposition.drivers.drivers[0],
               previousInsurance: {
                 ...proposition.drivers.drivers[0].previousInsurance,
-                [e.target.name]: e.target.value,
+                bonusMalus: parseInt(e.target.value),
+                bonusSenorityYears: 0,
               },
             },
           },
@@ -76,7 +77,45 @@ function Antecedants() {
   };
 
   const handleInsured = (e) => {
-    setProposition({
+    if(e.target.type === "number"){
+      setProposition({
+        ...proposition,
+        drivers: {
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              previousInsurance: {
+                ...proposition.drivers.drivers[0].previousInsurance,
+                [e.target.name]: parseInt(e.target.value)
+              },
+            },
+          },
+        },
+      });
+    }
+    else if (
+      e.target.value === "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE"
+    ) {
+      setProposition({
+        ...proposition,
+        drivers: {
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              previousInsurance: {
+                ...proposition.drivers.drivers[0].previousInsurance,
+                [e.target.name]: e.target.value,
+                insuranceMonths: 36,
+              },
+            },
+          },
+        },
+      });
+    } else {setProposition({
       ...proposition,
       drivers: {
         ...proposition.drivers,
@@ -86,12 +125,12 @@ function Antecedants() {
             ...proposition.drivers.drivers[0],
             previousInsurance: {
               ...proposition.drivers.drivers[0].previousInsurance,
-              [e.target.name]: e.target.value,
+              [e.target.name]: e.target.value
             },
           },
         },
       },
-    });
+    });}
   };
 
   const handleResilied = (choice) => {
@@ -138,23 +177,39 @@ function Antecedants() {
         <form>
           <select name="bonusMalus" onChange={(e) => HandleBonusMalus(e)}>
             <option>Sélectionner votre bonus/malus</option>
-            <option id="6" value="6">0.50 soit 50% de bonus, depuis + de 6 ans</option>
-            <option id="5" value="5">0.50 soit 50% de bonus, depuis 5 à 6 ans</option>
-            <option id="4" value="4">0.50 soit 50% de bonus, depuis 4 à 5 ans</option>
-            <option id="3" value="3">0.50 soit 50% de bonus, depuis 3 à 4 ans</option>
-            <option id="2" value="2">0.50 soit 50% de bonus, depuis 2 à 3 ans</option>
-            <option id="1" value="1">0.50 soit 50% de bonus, depuis 1 à 2 ans</option>
-            <option id="0" value="0">0.50 soit 50% de bonus, depuis - de 1 an</option>
+            <option key="6" value="6">
+              0.50 soit 50% de bonus, depuis + de 6 ans
+            </option>
+            <option key="5" value="5">
+              0.50 soit 50% de bonus, depuis 5 à 6 ans
+            </option>
+            <option key="4" value="4">
+              0.50 soit 50% de bonus, depuis 4 à 5 ans
+            </option>
+            <option key="3" value="3">
+              0.50 soit 50% de bonus, depuis 3 à 4 ans
+            </option>
+            <option key="2" value="2">
+              0.50 soit 50% de bonus, depuis 2 à 3 ans
+            </option>
+            <option key="1" value="1">
+              0.50 soit 50% de bonus, depuis 1 à 2 ans
+            </option>
+            <option key="0" value="0">
+              0.50 soit 50% de bonus, depuis - de 1 an
+            </option>
             {bonus &&
               bonus.map((el) => (
-                <option value={el * 100} id={el*100}>
+                <option value={el * 100} key={el * 100}>
                   {el} soit {Math.floor(100 - el * 100)}% de bonus
                 </option>
               ))}
-            <option id="100" value="100">1.00 soit 0% ni bonus, ni malus</option>
+            <option key="100" value="100">
+              1.00 soit 0% ni bonus, ni malus
+            </option>
             {malus &&
               malus.map((el) => (
-                <option value={el * 100} id={el*100}>
+                <option value={el * 100} key={el * 100}>
                   {el} soit {Math.floor(el * 100 - 100)}% de malus
                 </option>
               ))}
@@ -188,25 +243,34 @@ function Antecedants() {
                 : styles.ante_input_wrapper_off
             }
           >
-            <div className={proposition?.drivers?.drivers[0]?.previousInsurance
-                ?.insuranceSeniority === "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE"? style.btn_hidden:""}>
-            <p>Nombre de mois d'assurance depuis le {lastYear}</p>
-            <label htmlFor="insuranceMonths">
-              <input
-                onChange={(e) => handleInsured(e)}
-                type="number"
-                name="insuranceMonths"
-                id="insuranceMonths"
-              />
-            </label>
+            <div
+              className={
+                proposition?.drivers?.drivers[0]?.previousInsurance
+                  ?.insuranceSeniority ===
+                "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE"
+                  ? style.btn_hidden
+                  : ""
+              }
+            >
+              <p>Nombre de mois d'assurance depuis le {lastYear}</p>
+              <label htmlFor="insuranceMonths">
+                <input
+                  onChange={(e) => handleInsured(e)}
+                  type="number"
+                  name="insuranceMonths"
+                  key="insuranceMonths"
+                  value={proposition?.drivers?.drivers[0]?.insuranceMonths}
+                />
+              </label>
             </div>
             <label htmlFor="lastInsuranceName">
               <input
                 onChange={(e) => handleInsured(e)}
                 type="text"
                 name="lastInsuranceName"
-                id="lastInsuranceName"
+                key="lastInsuranceName"
                 placeholder="Votre précédent assureur"
+                value={proposition?.drivers?.drivers[0]?.lastInsuranceName}
               />
             </label>
             <p>
@@ -265,8 +329,9 @@ function Antecedants() {
                   onChange={(e) => handleInsured(e)}
                   type="text"
                   name="terminateBy"
-                  id="terminateBy"
+                  key="terminateBy"
                   placeholder="Nom de la dernière compagnie d'assurance ayant résiliée le contrat"
+                  value={proposition?.drivers?.drivers[0]?.terminateBy}
                 />
               </label>
             </div>

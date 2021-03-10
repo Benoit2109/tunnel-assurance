@@ -134,7 +134,7 @@ function Informations() {
                 <input
                   type="text"
                   name="firstname"
-                  id="firstname"
+                  key="firstname"
                   value={mainDriver?.firstname}
                   onChange={(e) => handleMainDriver(e)}
                 />
@@ -147,7 +147,7 @@ function Informations() {
                 <input
                   type="text"
                   name="name"
-                  id="name"
+                  key="name"
                   value={mainDriver?.name}
                   onChange={(e) => handleMainDriver(e)}
                 />
@@ -160,7 +160,7 @@ function Informations() {
                 <input
                   type="date"
                   name="birthDate"
-                  id="birthDate"
+                  key="birthDate"
                   onChange={(e) => handleDate(e)}
                 />
               </label>
@@ -174,7 +174,7 @@ function Informations() {
                 <input
                   type="tel"
                   name="telephone"
-                  id="telephone"
+                  key="telephone"
                   value={mainDriver?.telephone}
                   onChange={(e) => handleMainDriver(e)}
                 />
@@ -189,7 +189,7 @@ function Informations() {
                 <input
                   type="email"
                   name="email"
-                  id="email"
+                  key="email"
                   value={mainDriver?.email}
                   onChange={(e) => handleMainDriver(e)}
                 />
@@ -202,7 +202,7 @@ function Informations() {
                 <input
                   type="text"
                   name="address"
-                  id="address"
+                  key="address"
                   value={mainDriver?.address}
                   onChange={(e) => handleMainDriver(e)}
                 />
@@ -217,7 +217,7 @@ function Informations() {
                 <input
                   type="text"
                   name="zip_code"
-                  id="zip_code"
+                  key="zip_code"
                   value={mainDriver?.zip_code}
                   onChange={(e) => handleMainDriver(e)}
                 />
@@ -230,9 +230,9 @@ function Informations() {
                 <input
                   type="text"
                   name="city"
-                  id="city"
-                  value={mainDriver?.city}
-                  onChange={(e) => handleMainDriver(e)}
+                  key="city"
+                  value={proposition?.vehicle?.city}
+                  onChange={(e) => handleDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>VILLE</div>
@@ -242,7 +242,7 @@ function Informations() {
               <label htmlFor="familySituation">
                 <select
                   name="familySituation"
-                  id="familySituation"
+                  key="familySituation"
                   value={proposition?.drivers?.drivers[0]?.familySituation}
                   onChange={(e) => handleDriver(e)}
                 >
@@ -262,7 +262,7 @@ function Informations() {
               <label htmlFor="profession">
                 <select
                   name="profession"
-                  id="profession"
+                  key="profession"
                   value={proposition?.drivers?.drivers[0]?.profession}
                   onChange={(e) => handleDriver(e)}
                 >
@@ -286,7 +286,7 @@ function Informations() {
                 <input
                   type="date"
                   name="drivingLicenceObtainedDate"
-                  id="drivingLicenceObtainedDate"
+                  key="drivingLicenceObtainedDate"
                   onChange={(e) => handleDate(e)}
                 />
               </label>
@@ -299,7 +299,7 @@ function Informations() {
               <label htmlFor="accompaniedDriving">
                 <select
                   name="accompaniedDriving"
-                  id="accompaniedDriving"
+                  key="accompaniedDriving"
                   value={proposition?.drivers?.drivers[0]?.accompaniedDriving}
                   onChange={(e) => handleAAC(e)}
                 >

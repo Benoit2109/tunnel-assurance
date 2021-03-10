@@ -49,11 +49,11 @@ function ActualVehicule() {
             type: res.type,
             version: res.version,
             génération: "",
-            nbPortes: res.nbPortes,
+            nbPortes: "",
           });
           setProposition({
             ...proposition,
-            vehicle: { ...proposition.vehicle, price: res.prixVehic },
+            vehicle: { ...proposition.vehicle, price: parseInt(res.prixVehic) },
           });
         });
     } else {
@@ -65,10 +65,14 @@ function ActualVehicule() {
     setImmat(e.target.value);
   };
 
+  const handlePortes = (e) => {
+    setCar({ ...car, nbPortes: parseInt(e.target.value) });
+  };
+
   const handlekilo = (e) => {
     setProposition({
       ...proposition,
-      vehicle: { ...proposition.vehicle, kmTraveled: e.target.value },
+      vehicle: { ...proposition.vehicle, kmTraveled: parseInt(e.target.value) },
     });
   };
 
@@ -80,7 +84,7 @@ function ActualVehicule() {
           <label htmlFor="immat">
             <input
               type="text"
-              id="immat"
+              key="immat"
               name="immat"
               value={immat}
               pattern="[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}"
@@ -92,7 +96,7 @@ function ActualVehicule() {
 
           <button
             className={
-              immat.length === 9 ? style.btn_visible : style.btn_hidden
+              immat?.length === 9 ? style.btn_visible : style.btn_hidden
             }
             onClick={(e) => fetchImmat(e)}
           >
@@ -103,14 +107,14 @@ function ActualVehicule() {
 
       <div
         className={
-          car.modele.length !== 0
+          car?.modele?.length !== 0
             ? styles.av_carInfos_contener
             : styles.av_hidden
         }
       >
         <form className={styles.av_carInfos_form_wrapper}>
           <label htmlFor="brand">
-            <select name="brand" id="brand">
+            <select name="brand" key="brand">
               <option value="Marque">
                 {car.marque && car.marque.length > 0 ? car.marque : "Marque"}
               </option>
@@ -118,7 +122,7 @@ function ActualVehicule() {
           </label>
 
           <label htmlFor="model">
-            <select name="model" id="model">
+            <select name="model" key="model">
               <option value="model">
                 {car.modele && car.modele.length > 0 ? car.modele : "Modèle"}
               </option>
@@ -126,7 +130,7 @@ function ActualVehicule() {
           </label>
 
           <label htmlFor="energie">
-            <select name="energie" id="energie">
+            <select name="energie" key="energie">
               <option value="energie">
                 {car.energie && car.energie.length > 0
                   ? car.energie
@@ -136,7 +140,7 @@ function ActualVehicule() {
           </label>
 
           <label htmlFor="transmission">
-            <select name="transmission" id="transmission">
+            <select name="transmission" key="transmission">
               <option value="transmission">
                 {car.transmission && car.transmission.length > 0
                   ? car.transmission
@@ -146,7 +150,7 @@ function ActualVehicule() {
           </label>
 
           <label htmlFor="puissance">
-            <select name="puissance" id="puissance">
+            <select name="puissance" key="puissance">
               <option value="puissance">
                 {car.puissance && car.puissance.length > 0
                   ? car.puissance
@@ -156,7 +160,7 @@ function ActualVehicule() {
           </label>
 
           <label htmlFor="type">
-            <select name="type" id="type">
+            <select name="type" key="type">
               <option value="type">
                 {car.type && car.type.length > 0 ? car.type : "Type"}
               </option>
@@ -164,7 +168,7 @@ function ActualVehicule() {
           </label>
 
           <label htmlFor="generation">
-            <select name="generation" id="generation">
+            <select name="generation" key="generation">
               <option value="generation">
                 {car.generation && car.generation.length > 0
                   ? car.generation
@@ -178,9 +182,10 @@ function ActualVehicule() {
               <input
                 type="text"
                 name="nb de porte"
-                id="nb de porte"
+                key="nb de porte"
                 placeholder="0"
-                value={car.nbPortes}
+                value={car?.nbPortes}
+                onChange={(e) => handlePortes(e)}
               />
             </label>
             <div className={styles.av_placeholder}>Nombre de portes</div>
@@ -191,7 +196,7 @@ function ActualVehicule() {
               <input
                 type="text"
                 name="kilométrage"
-                id="kilométrage"
+                key="kilométrage"
                 placeholder="0"
                 onChange={(e) => handlekilo(e)}
                 value={car.kilometrage}

@@ -37,7 +37,7 @@ function Financing() {
           <label htmlFor="buy-date">
             <input
               type="date"
-              id="buy-date"
+              key="buy-date"
               name="buy-date"
               value={buyDate}
               required
@@ -52,7 +52,7 @@ function Financing() {
           <label htmlFor="pay-type">
             <select
               name="pay-type"
-              id="pay-type"
+              key="pay-type"
               value={finance}
               placeholder="Mode de financement"
               onChange={(e) => HandleFinance(e)}
@@ -70,7 +70,7 @@ function Financing() {
           <label htmlFor="start-date">
             <input
               type="date"
-              id="start-date"
+              key="start-date"
               name="start-date"
               min={jourPlus2}
               value={startDate}
