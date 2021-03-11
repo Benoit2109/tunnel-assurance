@@ -170,11 +170,11 @@ function OwnedCar() {
       <Link to="/actual-vehicule">
         <button
           className={
-            proposition?.vehicle?.release &&
-            proposition?.vehicle?.fundingMode &&
-            proposition?.vehicle?.getting &&
-            proposition?.vehicle?.hasVehiculeInsuranceSinceGetting &&
-            proposition.desiredEffect
+            ((proposition?.vehicle?.release) &&
+            (proposition?.vehicle?.fundingMode !== "UNKNOWN") &&
+            (proposition?.vehicle?.getting) &&
+            (proposition?.vehicle?.hasVehiculeInsuranceSinceGetting) &&
+            (proposition.desiredEffect))
               ? style.btn_visible
               : style.btn_hidden
           }

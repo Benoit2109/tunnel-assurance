@@ -249,10 +249,10 @@ function Trajets() {
       <Link to="/informations">
         <button
           className={
-            proposition.vehicle.use &&
-            proposition.vehicle.garageMode &&
-            proposition.drivers.driverGroupType &&
-            proposition.drivers.grayCardOwnerType
+            (proposition.vehicle.use !=="UNKNOWN") &&
+            (proposition.vehicle.garageMode !=="UNKNOWN") &&
+            (proposition.drivers.driverGroupType !=="UNKNOWN") &&
+            (proposition.drivers.grayCardOwnerType !=="UNKNOWN")
               ? style.btn_visible
               : style.btn_hidden
           }

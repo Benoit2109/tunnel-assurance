@@ -77,7 +77,11 @@
 
 .ante_input_wrapper label{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .ante_input_wrapper p{
     text-align: center;
@@ -103,4 +107,8 @@
 
 .ante_resilied_section_off{
     display: none;
+}
+
+.ante_visible{
+  width: 100%; 
 }

@@ -26,15 +26,15 @@ function Domiciliation() {
   }, [setHeader, header.path]);
 
   const handleAddress = (e) => {
-    if (e.target.value.length > 0) {
+    if (e.target.value.length > 4) {
       let fetchAddress = e.target.value.split(" ").join("+");
       axios
         .get(
-          `https://api-adresse.data.gouv.fr/search/?q=${fetchAddress}&limit=10`
-        )
+          `https://api-adresse.data.gouv.fr/search/?q=${fetchAddress}&limit=10`)
         .then((res) => {
-          console.log(res.data.features);
-          setFindAddress(res.data.features)});
+          setFindAddress(res.data.features);
+          
+        });
     }
   };
 
@@ -44,10 +44,11 @@ function Domiciliation() {
       vehicle: {
         ...proposition.vehicle,
         postalCode: address[0].properties.postcode,
-        city: address[0].properties.city
+        city: address[0].properties.city,
       },
     });
-    setMainDriver({...mainDriver,
+    setMainDriver({
+      ...mainDriver,
       address: address[0].properties.name,
       zip_code: address[0].properties.postcode,
       city: address[0].properties.city,
@@ -56,7 +57,6 @@ function Domiciliation() {
 
   const selectAddress = (e) => {
     setAddress([findAddress.find((el) => el.properties.id === e.target.id)]);
-    console.log("address",address);
     setFindAddress("");
   };
 
@@ -111,7 +111,11 @@ function Domiciliation() {
         <ul>
           {findAddress &&
             findAddress.map((e) => (
-              <li key={e.properties.id} id={e.properties.id} onClick={(e) => selectAddress(e)}>
+              <li
+                key={e.properties.id}
+                id={e.properties.id}
+                onClick={(e) => selectAddress(e)}
+              >
                 {e.properties.label}
               </li>
             ))}

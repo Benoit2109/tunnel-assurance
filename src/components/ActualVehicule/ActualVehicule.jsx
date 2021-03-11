@@ -21,7 +21,7 @@ function ActualVehicule() {
     version: "",
     génération: "",
     nbPortes: "",
-    kilometrage: "",
+    kilometrage: 0,
   });
 
   useEffect(() => {
@@ -50,6 +50,7 @@ function ActualVehicule() {
             version: res.version,
             génération: "",
             nbPortes: "",
+            kilometrage:"",
           });
           setProposition({
             ...proposition,
@@ -66,7 +67,7 @@ function ActualVehicule() {
   };
 
   const handlePortes = (e) => {
-    setCar({ ...car, nbPortes: parseInt(e.target.value) });
+    setCar({ ...car, [e.target.name]: parseInt(e.target.value) });
   };
 
   const handlekilo = (e) => {
@@ -74,6 +75,7 @@ function ActualVehicule() {
       ...proposition,
       vehicle: { ...proposition.vehicle, kmTraveled: parseInt(e.target.value) },
     });
+    setCar({ ...car, kilometrage: parseInt(e.target.value) });
   };
 
   return (
@@ -92,11 +94,12 @@ function ActualVehicule() {
               placeholder="AB-123-CD"
               onChange={(e) => handleImmat(e)}
             />
+            <span className={immat.length < 9 ? style.match : immat.match("[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}")? style.match : style.error}>{immat.match("[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}")? "": "veuillez respecter le format d'immatriculation"}</span>
           </label>
 
           <button
             className={
-              immat?.length === 9 ? style.btn_visible : style.btn_hidden
+              immat.match("[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}") ? style.btn_visible : style.btn_hidden
             }
             onClick={(e) => fetchImmat(e)}
           >
@@ -178,15 +181,16 @@ function ActualVehicule() {
           </label>
 
           <div className={styles.av_field_wrapper}>
-            <label htmlFor="nb de porte">
+            <label htmlFor="nbPortes">
               <input
-                type="text"
-                name="nb de porte"
-                key="nb de porte"
+                type="number"
+                name="nbPortes"
+                key="nbPortes"
                 placeholder="0"
                 value={car?.nbPortes}
                 onChange={(e) => handlePortes(e)}
               />
+              <span className={car?.nbPortes > 5 ? style.error : style.match}>{car?.nbPortes > 5 ? "nombre de portes non valable" : ""}</span>
             </label>
             <div className={styles.av_placeholder}>Nombre de portes</div>
           </div>
@@ -194,7 +198,7 @@ function ActualVehicule() {
           <div className={styles.av_field_wrapper}>
             <label htmlFor="kilométrage">
               <input
-                type="text"
+                type="number"
                 name="kilométrage"
                 key="kilométrage"
                 placeholder="0"
@@ -207,7 +211,7 @@ function ActualVehicule() {
         </form>
 
         <Link to="/domiciliation">
-          <button className={style.btn_visible}>Étape suivante</button>
+          <button className={proposition?.vehicle?.price && car?.kilometrage? style.btn_visible: style.btn_hidden}>Étape suivante</button>
         </Link>
       </div>
     </div>

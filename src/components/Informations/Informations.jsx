@@ -11,7 +11,7 @@ import { MainDriverContext } from "../../Contexts/MainDriverContext";
 function Informations() {
   const { setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
-  const { mainDriver, setMainDriver} = useContext(MainDriverContext);
+  const { mainDriver, setMainDriver } = useContext(MainDriverContext);
   const [sex, setSex] = useState("");
 
   useEffect(() => {
@@ -32,9 +32,9 @@ function Informations() {
     });
   };
 
-  const handleMainDriver =(e)=> {
-    setMainDriver({...mainDriver, [e.target.name]: e.target.value})
-  }
+  const handleMainDriver = (e) => {
+    setMainDriver({ ...mainDriver, [e.target.name]: e.target.value });
+  };
 
   const handleDriver = (e) => {
     setProposition({
@@ -98,7 +98,7 @@ function Informations() {
         },
       },
     });
-    setMainDriver({...mainDriver, [e.target.name]:e.target.value})
+    setMainDriver({ ...mainDriver, [e.target.name]: e.target.value });
   };
 
   return (
@@ -193,6 +193,7 @@ function Informations() {
                   value={mainDriver?.email}
                   onChange={(e) => handleMainDriver(e)}
                 />
+                <span className={mainDriver?.email.length<5? style.match : mainDriver?.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) ? style.match : style.error}>{mainDriver?.email.length<5? "" : mainDriver?.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) ? "" : "veuillez vérifier votre adresse email"}</span>
               </label>
               <div className={styles.informations_placeholder}>EMAIL</div>
             </div>
@@ -317,7 +318,20 @@ function Informations() {
         </div>
       </div>
       <Link to="/antecedants">
-        <button className={style.btn_visible}>Étape suivante</button>
+        <button
+          className={
+            proposition.drivers.drivers[0].sex !== "UNKNOWN" &&
+            proposition.drivers.drivers[0].birthDate !== "" &&
+            proposition.drivers.drivers[0].familySituation !== "UNKNOWN" &&
+            proposition.drivers.drivers[0].profession !== "UNKNOWN" &&
+            proposition.drivers.drivers[0].drivingLicenceObtainedDate !== "" &&
+            proposition.drivers.drivers[0].accompaniedDriving !== "UNKNOWN"
+              ? style.btn_visible
+              : style.btn_hidden
+          }
+        >
+          Étape suivante
+        </button>
       </Link>
     </div>
   );

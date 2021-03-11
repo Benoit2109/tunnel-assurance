@@ -81,3 +81,12 @@
   cursor: pointer; 
 }
 
+.error{
+  color: red;
+  font-size: 0.7rem;
+}
+
+.match{
+  display: none;
+}
+

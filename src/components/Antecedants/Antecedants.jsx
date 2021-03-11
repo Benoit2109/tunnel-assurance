@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { lastYear } from "../commons/convertDate";
 import { years3ago } from "../commons/convertDate";
-
-import style from "../../css/main.module.css";
-import styles from "./Antecedants.module.css";
 import { HeaderContext } from "../../Contexts/headerContext";
 import { PropositionContext } from "../../Contexts/PropositionContext";
 import axios from "axios";
+
+import style from "../../css/main.module.css";
+import styles from "./Antecedants.module.css";
 
 function Antecedants() {
   const { setHeader } = useContext(HeaderContext);
@@ -77,7 +77,7 @@ function Antecedants() {
   };
 
   const handleInsured = (e) => {
-    if(e.target.type === "number"){
+    if (e.target.type === "number") {
       setProposition({
         ...proposition,
         drivers: {
@@ -88,14 +88,13 @@ function Antecedants() {
               ...proposition.drivers.drivers[0],
               previousInsurance: {
                 ...proposition.drivers.drivers[0].previousInsurance,
-                [e.target.name]: parseInt(e.target.value)
+                [e.target.name]: parseInt(e.target.value),
               },
             },
           },
         },
       });
-    }
-    else if (
+    } else if (
       e.target.value === "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE"
     ) {
       setProposition({
@@ -115,22 +114,24 @@ function Antecedants() {
           },
         },
       });
-    } else {setProposition({
-      ...proposition,
-      drivers: {
-        ...proposition.drivers,
+    } else {
+      setProposition({
+        ...proposition,
         drivers: {
-          ...proposition.drivers.drivers,
-          [0]: {
-            ...proposition.drivers.drivers[0],
-            previousInsurance: {
-              ...proposition.drivers.drivers[0].previousInsurance,
-              [e.target.name]: e.target.value
+          ...proposition.drivers,
+          drivers: {
+            ...proposition.drivers.drivers,
+            [0]: {
+              ...proposition.drivers.drivers[0],
+              previousInsurance: {
+                ...proposition.drivers.drivers[0].previousInsurance,
+                [e.target.name]: e.target.value,
+              },
             },
           },
         },
-      },
-    });}
+      });
+    }
   };
 
   const handleResilied = (choice) => {
@@ -249,7 +250,7 @@ function Antecedants() {
                   ?.insuranceSeniority ===
                 "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE"
                   ? style.btn_hidden
-                  : ""
+                  : styles.ante_visible
               }
             >
               <p>Nombre de mois d'assurance depuis le {lastYear}</p>
@@ -261,6 +262,83 @@ function Antecedants() {
                   key="insuranceMonths"
                   value={proposition?.drivers?.drivers[0]?.insuranceMonths}
                 />
+                <span
+                  className={
+                    proposition?.drivers?.drivers[0]?.previousInsurance
+                      .insuranceSeniority === "YES_INSURED_LESS_12_MONTHS" &&
+                    proposition?.drivers?.drivers[0]?.previousInsurance
+                      .insuranceMonths > 12
+                      ? style.error
+                      : proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceSeniority ===
+                          "YES_WITH_INTERRUPTION_ON_LAST_12_MONTHS" &&
+                        proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceMonths > 12
+                      ? style.error
+                      : proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceSeniority ===
+                          "YES_WITH_INTERRUPTION_ON_LAST_24_MONTHS" &&
+                        proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceMonths > 24
+                      ? style.error
+                      : proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceSeniority ===
+                          "YES_WITH_INTERRUPTION_ON_LAST_24_MONTHS" &&
+                        proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceMonths > 24
+                      ? style.error
+                      : proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceSeniority ===
+                          "YES_WITH_INTERRUPTION_ON_LAST_36_MONTHS" &&
+                        proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceMonths > 36
+                      ? style.error
+                      : proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceSeniority ===
+                          "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE" &&
+                        proposition?.drivers?.drivers[0]?.previousInsurance
+                          .insuranceMonths > 36
+                      ? style.error
+                      : style.match
+                  }
+                >
+                  {proposition?.drivers?.drivers[0]?.previousInsurance
+                    .insuranceSeniority === "YES_INSURED_LESS_12_MONTHS" &&
+                  proposition?.drivers?.drivers[0]?.previousInsurance
+                    .insuranceMonths > 12
+                    ? "veuillez vérifier la valeur saisie"
+                    : proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceSeniority ===
+                        "YES_WITH_INTERRUPTION_ON_LAST_12_MONTHS" &&
+                      proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceMonths > 12
+                    ? "veuillez vérifier la valeur saisie"
+                    : proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceSeniority ===
+                        "YES_WITH_INTERRUPTION_ON_LAST_24_MONTHS" &&
+                      proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceMonths > 24
+                    ? "veuillez vérifier la valeur saisie"
+                    : proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceSeniority ===
+                        "YES_WITH_INTERRUPTION_ON_LAST_24_MONTHS" &&
+                      proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceMonths > 24
+                    ? "veuillez vérifier la valeur saisie"
+                    : proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceSeniority ===
+                        "YES_WITH_INTERRUPTION_ON_LAST_36_MONTHS" &&
+                      proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceMonths > 36
+                    ? "veuillez vérifier la valeur saisie"
+                    : proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceSeniority ===
+                        "YES_WITHOUT_INTERRUPTION_ON_LAST_36_MONTHS_AND_MORE" &&
+                      proposition?.drivers?.drivers[0]?.previousInsurance
+                        .insuranceMonths > 36
+                    ? "veuillez vérifier la valeur saisie"
+                    : ""}
+                </span>
               </label>
             </div>
             <label htmlFor="lastInsuranceName">
@@ -310,7 +388,7 @@ function Antecedants() {
                 proposition?.drivers?.drivers[0]?.previousInsurance
                   ?.hasInsuranceTerminate === "UNKNOWN"
                   ? styles.ante_resilied_section_off
-                  : ""
+                  : styles.ante_visible
               }
             >
               <select name="terminateReason" onChange={(e) => handleInsured(e)}>

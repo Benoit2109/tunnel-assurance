@@ -50,10 +50,11 @@ function RoadBScore() {
               type="text"
               value={proposition?.codeRBS}
               placeholder="ABCDEFG/+33600000000"
-              pattern="[A-Za-z]{7}/+[0-9]{11}"
+              pattern="[A-Za-z]{7}/.[0-9]{11}"
               title="le code RBS est une combinaison du type ABCDEFG/+33600000000"
               onChange={(e) => handleChange(e)}
             />
+            <span className={proposition?.codeRBS.length<20? style.error : proposition?.codeRBS.length>20 ? style.error : proposition?.codeRBS.match("[A-Za-z]{7}/+[0-9]{11}")? style.match:style.error }>{proposition?.codeRBS.length<20? "le code RBS est trop court" : proposition?.codeRBS.length>20 ? "le code RBS est trop long" : proposition?.codeRBS.match(`[A-Za-z]{7}/.[0-9]{11}`)? "":"le code RBS ne respecte pas le bon format" }</span>
           </label>
           <Link to="/vehicule-condition" className={styles.rbs_link}>
             <input
