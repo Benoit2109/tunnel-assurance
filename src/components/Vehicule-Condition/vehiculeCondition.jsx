@@ -13,6 +13,7 @@ function VehiculeCondition() {
   const { setHeader } = useContext(HeaderContext);
   const {proposition, setProposition} = useContext(PropositionContext);
   
+  // je charge les infos de mon header en fonction du composant.
 
   useEffect(() => {
     setHeader({ title: "Assurance", path: "/rbs" });
@@ -97,6 +98,8 @@ function VehiculeCondition() {
           alt="checkmark"
         />
       </div>
+
+      {/* j'initialise le lien vers le composant suivant en fonction de la réponse: véhicule existant ou à l'achat */}
 
       <Link to={proposition?.vehicle?.gettingMode === "HAVE_ALREADY_VEHICLE" ? "/owned-car" : "/financing"}>
         <button

@@ -12,6 +12,8 @@ function OwnedCar() {
   const { proposition, setProposition } = useContext(PropositionContext);
   const { setHeader } = useContext(HeaderContext);
 
+// je charge les infos de mon header en fonction du composant.
+
   useEffect(() => {
     setHeader({
       path: "/vehicule-condition",
@@ -35,6 +37,8 @@ function OwnedCar() {
       },
     });
   };
+
+  // je traite les dates de manière séparé du reste du context pour envoyer le bon format de date
 
   const HandleDate = (e) => {
     setProposition({
@@ -130,6 +134,8 @@ function OwnedCar() {
           </div>
         </div>
 
+        {/* J'affiche les informations suivante en fonction de la réponse à la question de savoir si le véhicule est actuellement assuré */}
+
         <div
           className={
             proposition?.vehicle?.hasVehiculeInsuranceSinceGetting === false
@@ -167,6 +173,9 @@ function OwnedCar() {
           </div>
         </div>
       </form>
+
+          {/* Je n'affiche le bouton de validation et passage à l'étape suivante uniquement si les champs nécessaire sont remplis */}
+
       <Link to="/actual-vehicule">
         <button
           className={

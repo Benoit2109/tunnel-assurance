@@ -24,13 +24,17 @@ function ActualVehicule() {
     kilometrage: 0,
   });
 
+  // je charge les infos de mon header en fonction du composant.
+
   useEffect(() => {
     setHeader({ path: "/owned-car", title: "Voiture actuelle" });
   }, [setHeader]);
   const Token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ2OTQ5NTYsInJvbGUiOiJbXCJBZG1pbmlzdHJhdG9yc1wiLFwiUmVnaXN0ZXJlZCBVc2Vyc1wiLFwiU3Vic2NyaWJlcnNcIl0iLCJuYW1laWQiOiI1MDQiLCJ1bmlxdWVfbmFtZSI6Imp1bGllbiB0ZXN0IiwibmJmIjoxNjE0NjA4NTU2LCJpc3MiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8iLCJhdWQiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8ifQ.FGdwGt2p6aXEGWEb0RMnunqu9CGQR1vIZNFxRSBHniQ`;
 
+  // Si l'immaticulation est au bon format j'autorise l'appel à l'API pour rechercher le véhicule.
+
   const fetchImmat = (event) => {
-    if (immat.length === 9) {
+    if (immat.match("[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}")) {
       event.preventDefault();
       axios
         .get(
@@ -94,6 +98,9 @@ function ActualVehicule() {
               placeholder="AB-123-CD"
               onChange={(e) => handleImmat(e)}
             />
+
+            {/* J'affiche à l'utilisateur un message d'erreur si la plaque n'est pas au bon format */}
+
             <span className={immat.length < 9 ? style.match : immat.match("[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}")? style.match : style.error}>{immat.match("[A-Za-z]{2}-[0-9]{3}-[A-Za-z]{2}")? "": "veuillez respecter le format d'immatriculation"}</span>
           </label>
 
@@ -190,6 +197,9 @@ function ActualVehicule() {
                 value={car?.nbPortes}
                 onChange={(e) => handlePortes(e)}
               />
+
+              {/* je vérifie que la valeur du nombre de porte du vehicule est cohérante sinon j'affiche un message d'erreur */}
+
               <span className={car?.nbPortes > 5 ? style.error : style.match}>{car?.nbPortes > 5 ? "nombre de portes non valable" : ""}</span>
             </label>
             <div className={styles.av_placeholder}>Nombre de portes</div>
@@ -211,6 +221,9 @@ function ActualVehicule() {
         </form>
 
         <Link to="/domiciliation">
+
+          {/* Si j'ai récupéré les infrmations necessaire dans mon context, j'affiche le bouto pour passer à l'étape suivante */}
+
           <button className={proposition?.vehicle?.price && car?.kilometrage? style.btn_visible: style.btn_hidden}>Étape suivante</button>
         </Link>
       </div>

@@ -6,18 +6,16 @@ import { apiDate } from "../commons/convertDate";
 
 import style from "../../css/main.module.css";
 import styles from "./Informations.module.css";
-import { MainDriverContext } from "../../Contexts/MainDriverContext";
+import { SecondDriverContext } from "../../Contexts/SecondDriverContext";
 
 function Informations() {
   const { setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
-  const { mainDriver, setMainDriver } = useContext(MainDriverContext);
+  const { secondDriver, setSecondDriver } = useContext(SecondDriverContext);
   const [sex, setSex] = useState("");
 
-  // J'initialise le header en fonction du composant monté.
-
   useEffect(() => {
-    setHeader({ path: "/trajets", title: "Informations" });
+    setHeader({ path: "/informations", title: "Informations" });
   }, [setHeader]);
 
   const handleGender = (choice) => {
@@ -28,14 +26,14 @@ function Informations() {
         ...proposition.drivers,
         drivers: {
           ...proposition.drivers.drivers,
-          [0]: { ...proposition.drivers.drivers[0], sex: choice },
+          [1]: { ...proposition.drivers.drivers[1], sex: choice },
         },
       },
     });
   };
 
-  const handleMainDriver = (e) => {
-    setMainDriver({ ...mainDriver, [e.target.name]: e.target.value });
+  const handleSecondDriver = (e) => {
+    setSecondDriver({ ...secondDriver, [e.target.name]: e.target.value });
   };
 
   const handleDriver = (e) => {
@@ -45,8 +43,8 @@ function Informations() {
         ...proposition.drivers,
         drivers: {
           ...proposition.drivers.drivers,
-          [0]: {
-            ...proposition.drivers.drivers[0],
+          [1]: {
+            ...proposition.drivers.drivers[1],
             [e.target.name]: e.target.value,
           },
         },
@@ -62,8 +60,8 @@ function Informations() {
           ...proposition.drivers,
           drivers: {
             ...proposition.drivers.drivers,
-            [0]: {
-              ...proposition.drivers.drivers[0],
+            [1]: {
+              ...proposition.drivers.drivers[1],
               accompaniedDriving: true,
             },
           },
@@ -76,8 +74,8 @@ function Informations() {
           ...proposition.drivers,
           drivers: {
             ...proposition.drivers.drivers,
-            [0]: {
-              ...proposition.drivers.drivers[0],
+            [1]: {
+              ...proposition.drivers.drivers[1],
               accompaniedDriving: false,
             },
           },
@@ -86,8 +84,6 @@ function Informations() {
     }
   };
 
-  // je traite les dates du context séparément pour m'assurer du bon format des informations
-
   const handleDate = (e) => {
     setProposition({
       ...proposition,
@@ -95,21 +91,21 @@ function Informations() {
         ...proposition.drivers,
         drivers: {
           ...proposition.drivers.drivers,
-          [0]: {
-            ...proposition.drivers.drivers[0],
+          [1]: {
+            ...proposition.drivers.drivers[1],
             [e.target.name]: apiDate(e.target.value),
           },
         },
       },
     });
-    setMainDriver({ ...mainDriver, [e.target.name]: e.target.value });
+    setSecondDriver({ ...secondDriver, [e.target.name]: e.target.value });
   };
 
   return (
     <div className={styles.informations_wrapper}>
       <div className={styles.informations_contener}>
         <section>
-          <p>Conducteur principal</p>
+          <p>Conducteur secondaire</p>
           <div className={styles.informations_avatar_wrapper}>
             <p>Je suis...</p>
             <div
@@ -139,8 +135,8 @@ function Informations() {
                   type="text"
                   name="firstname"
                   key="firstname"
-                  value={mainDriver?.firstname}
-                  onChange={(e) => handleMainDriver(e)}
+                  value={secondDriver?.firstname}
+                  onChange={(e) => handleSecondDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>MON PRÉNOM</div>
@@ -152,8 +148,8 @@ function Informations() {
                   type="text"
                   name="name"
                   key="name"
-                  value={mainDriver?.name}
-                  onChange={(e) => handleMainDriver(e)}
+                  value={secondDriver?.name}
+                  onChange={(e) => handleSecondDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>MON NOM</div>
@@ -179,8 +175,8 @@ function Informations() {
                   type="tel"
                   name="telephone"
                   key="telephone"
-                  value={mainDriver?.telephone}
-                  onChange={(e) => handleMainDriver(e)}
+                  value={secondDriver?.telephone}
+                  onChange={(e) => handleSecondDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>
@@ -194,31 +190,10 @@ function Informations() {
                   type="email"
                   name="email"
                   key="email"
-                  value={mainDriver?.email}
-                  onChange={(e) => handleMainDriver(e)}
+                  value={secondDriver?.email}
+                  onChange={(e) => handleSecondDriver(e)}
                 />
-
-                {/* je m'assure du format de donnée saisie et j'affiche le message d'erreur correspondant */}
-
-                <span
-                  className={
-                    mainDriver?.email.length < 5
-                      ? style.match
-                      : mainDriver?.email.match(
-                          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                        )
-                      ? style.match
-                      : style.error
-                  }
-                >
-                  {mainDriver?.email.length < 5
-                    ? ""
-                    : mainDriver?.email.match(
-                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                      )
-                    ? ""
-                    : "veuillez vérifier votre adresse email"}
-                </span>
+                <span className={secondDriver?.email.length<5? style.match : secondDriver?.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) ? style.match : style.error}>{secondDriver?.email.length<5? "" : secondDriver?.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) ? "" : "veuillez vérifier votre adresse email"}</span>
               </label>
               <div className={styles.informations_placeholder}>EMAIL</div>
             </div>
@@ -229,8 +204,8 @@ function Informations() {
                   type="text"
                   name="address"
                   key="address"
-                  value={mainDriver?.address}
-                  onChange={(e) => handleMainDriver(e)}
+                  value={secondDriver?.address}
+                  onChange={(e) => handleSecondDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>
@@ -244,8 +219,8 @@ function Informations() {
                   type="text"
                   name="zip_code"
                   key="zip_code"
-                  value={mainDriver?.zip_code}
-                  onChange={(e) => handleMainDriver(e)}
+                  value={secondDriver?.zip_code}
+                  onChange={(e) => handleSecondDriver(e)}
                 />
               </label>
               <div className={styles.informations_placeholder}>CODE POSTAL</div>
@@ -269,7 +244,7 @@ function Informations() {
                 <select
                   name="familySituation"
                   key="familySituation"
-                  value={proposition?.drivers?.drivers[0]?.familySituation}
+                  value={proposition?.drivers?.drivers[1]?.familySituation}
                   onChange={(e) => handleDriver(e)}
                 >
                   <option value="UNKNOWN">Situation familliale</option>
@@ -289,7 +264,7 @@ function Informations() {
                 <select
                   name="profession"
                   key="profession"
-                  value={proposition?.drivers?.drivers[0]?.profession}
+                  value={proposition?.drivers?.drivers[1]?.profession}
                   onChange={(e) => handleDriver(e)}
                 >
                   <option value="UNKNOWN">Profession</option>
@@ -326,7 +301,7 @@ function Informations() {
                 <select
                   name="accompaniedDriving"
                   key="accompaniedDriving"
-                  value={proposition?.drivers?.drivers[0]?.accompaniedDriving}
+                  value={proposition?.drivers?.drivers[1]?.accompaniedDriving}
                   onChange={(e) => handleAAC(e)}
                 >
                   <option value="UNKNOWN">Avez vous fait AAC ?</option>
@@ -342,18 +317,15 @@ function Informations() {
           </form>
         </div>
       </div>
-
-      {/* je n'autorise la vaidation des données et le passage à l'étape suivante uniquement si les données nécessaires ont remplies.*/}
-
-      <Link to={proposition.drivers.driverGroupType !== "MYSELF" ? "/informations2": "antecedants"}>
+      <Link to="/antecedants">
         <button
           className={
-            proposition.drivers.drivers[0].sex !== "UNKNOWN" &&
-            proposition.drivers.drivers[0].birthDate !== "" &&
-            proposition.drivers.drivers[0].familySituation !== "UNKNOWN" &&
-            proposition.drivers.drivers[0].profession !== "UNKNOWN" &&
-            proposition.drivers.drivers[0].drivingLicenceObtainedDate !== "" &&
-            proposition.drivers.drivers[0].accompaniedDriving !== "UNKNOWN"
+            proposition.drivers.drivers[1].sex !== "UNKNOWN" &&
+            proposition.drivers.drivers[1].birthDate !== "" &&
+            proposition.drivers.drivers[1].familySituation !== "UNKNOWN" &&
+            proposition.drivers.drivers[1].profession !== "UNKNOWN" &&
+            proposition.drivers.drivers[1].drivingLicenceObtainedDate !== "" &&
+            proposition.drivers.drivers[1].accompaniedDriving !== "UNKNOWN"
               ? style.btn_visible
               : style.btn_hidden
           }

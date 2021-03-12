@@ -17,6 +17,8 @@ function Domiciliation() {
   const [address, setAddress] = useState([]);
   const [findAddress, setFindAddress] = useState([]);
 
+  // j'initialise mon header avec les infos reçu au montge de mon composant.
+
   useEffect(() => {
     if (header.path === "/owned-car") {
       setHeader({ path: "/actual-vehicule", title: "Domiciliation" });
@@ -25,18 +27,21 @@ function Domiciliation() {
     }
   }, [setHeader, header.path]);
 
+  // je lance mon appel à l'api HERE uniquement lorsque la recherche dépasse 4 caractère afin de limiter le nombre d'appel et précisier mes résultats.
+
   const handleAddress = (e) => {
     if (e.target.value.length > 4) {
       let fetchAddress = e.target.value.split(" ").join("+");
       axios
         .get(
-          `https://geocode.search.hereapi.com/v1/geocode?q=${fetchAddress}&apiKey=HJOMK543rJEuqp4_UDWH0zqXul1RXJUZcBzVX-5Cgg0`)
+          `https://geocode.search.hereapi.com/v1/geocode?q=${fetchAddress}&apiKey=0UDiQDnGqivVBljhgwZiqCJHiE45lClwR5j4ClysH88`)
         .then((res) => {
           setFindAddress(res.data.items);
-          console.log(res.data.items);
         });
     }
   };
+
+  // je sauve les informations nécessaire dans mon context pour mon appel final et obtenir une proposition d'assurance.
 
   const handleFullAddress = () => {
     setProposition({
@@ -47,6 +52,9 @@ function Domiciliation() {
         city: address[0].address.city,
       },
     });
+
+    // Je récupère les infos du conducteur pour plus tard et aider à l'autocomplétion du composant informations.
+
     setMainDriver({
       ...mainDriver,
       address: `${address[0].address.houseNumber} ${address[0].address.street}`,
@@ -59,6 +67,8 @@ function Domiciliation() {
     setAddress([findAddress.find((el) => el.id === e.target.id)]);
     setFindAddress("");
   };
+
+  // je permet à l'utilisateur de faire un reset d'address pour saisir une autre adresse s'il a fait une erreur de saisie.
 
   const initAddress = () => {
     setAddress("");
@@ -90,6 +100,9 @@ function Domiciliation() {
       </div>
 
       <div></div>
+
+    {/* j'envoie le state address à mon composant map pour pouvoir fficher le résultat de a recherche sur la carte et permettre à l'utilisateur de s'assurer que son addresse correspond */}
+
       <Map className={styles.dom_map_wrapper} address={address} />
 
       <Link to="/trajets">

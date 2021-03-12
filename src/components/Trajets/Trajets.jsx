@@ -14,6 +14,8 @@ function Trajets() {
   const { setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
 
+  // j'initialise le header en focntion du composant monté
+
   useEffect(() => {
     setHeader({ path: "/domiciliation", title: "Vos trajets" });
   }, [setHeader]);
@@ -246,13 +248,15 @@ function Trajets() {
         </div>
       </div>
 
+      {/* je n'affiche le bouton de validation des données et passage à l'étape suivante uniquement si les infos sont correctes */}
+
       <Link to="/informations">
         <button
           className={
-            (proposition.vehicle.use !=="UNKNOWN") &&
-            (proposition.vehicle.garageMode !=="UNKNOWN") &&
-            (proposition.drivers.driverGroupType !=="UNKNOWN") &&
-            (proposition.drivers.grayCardOwnerType !=="UNKNOWN")
+            proposition.vehicle.use !== "UNKNOWN" &&
+            proposition.vehicle.garageMode !== "UNKNOWN" &&
+            proposition.drivers.driverGroupType !== "UNKNOWN" &&
+            proposition.drivers.grayCardOwnerType !== "UNKNOWN"
               ? style.btn_visible
               : style.btn_hidden
           }

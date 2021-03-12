@@ -11,11 +11,16 @@ function RoadBScore() {
   const { setHeader } = useContext(HeaderContext);
   const { proposition, setProposition } = useContext(PropositionContext);
 
+  // je charge les infos de mon header en fonction du composant.
+
   useEffect(() => {
     setHeader({ path: "/", title: "Road-B-Score ®" });
   }, [setHeader, proposition.codeRBS]);
 
+
   const handleChange = (e) => {
+
+    // je renseigne mon context qui me servira à faire mon envoi pour recevoir une proposition d'assurance
     setProposition({ ...proposition, codeRBS: e.target.value });
   };
 
@@ -54,6 +59,9 @@ function RoadBScore() {
               title="le code RBS est une combinaison du type ABCDEFG/+33600000000"
               onChange={(e) => handleChange(e)}
             />
+
+            {/* je vérifie le corde RBS saisi afin qu'il corresponde au pattern, j'affiche le message d'erreur correspondant */}
+
             <span className={proposition?.codeRBS.length<20? style.error : proposition?.codeRBS.length>20 ? style.error : proposition?.codeRBS.match("[A-Za-z]{7}/+[0-9]{11}")? style.match:style.error }>{proposition?.codeRBS.length<20? "le code RBS est trop court" : proposition?.codeRBS.length>20 ? "le code RBS est trop long" : proposition?.codeRBS.match(`[A-Za-z]{7}/.[0-9]{11}`)? "":"le code RBS ne respecte pas le bon format" }</span>
           </label>
           <Link to="/vehicule-condition" className={styles.rbs_link}>

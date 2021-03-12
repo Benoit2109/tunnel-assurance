@@ -15,8 +15,14 @@ function Antecedants() {
   const [bonus, setBonus] = useState("");
   const [malus, setMalus] = useState("");
 
+  // J'initialise le header en focntion du composant monté
+  // J'initialise les valeurs pour le bonus malus.
+
   useEffect(() => {
-    setHeader({ path: "/informations", title: "Antécédents assurances" });
+    proposition.drivers.driverGroupType !== "MYSELF"
+      ? setHeader({ path: "/informations2", title: "Antécédents assurances" })
+      : setHeader({ path: "/informations", title: "Antécédents assurances" });
+
     const BonusList = () => {
       let boucleBonus = [];
       for (let i = 51; i < 100; i++) {
@@ -75,6 +81,8 @@ function Antecedants() {
       });
     }
   };
+
+  // je trait les dates de façon séparé pour m'assurer que le context reçoit les infos au bon format. je traite le cas particulier en fonction de la saisie.
 
   const handleInsured = (e) => {
     if (e.target.type === "number") {
@@ -152,6 +160,8 @@ function Antecedants() {
       },
     });
   };
+
+  // Au click sur le bouton de validation, j'envoie le context proposition à l'api pour obtneir une offre.
 
   const SubmitProposition = () => {
     const Token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTQ2OTQ5NTYsInJvbGUiOiJbXCJBZG1pbmlzdHJhdG9yc1wiLFwiUmVnaXN0ZXJlZCBVc2Vyc1wiLFwiU3Vic2NyaWJlcnNcIl0iLCJuYW1laWQiOiI1MDQiLCJ1bmlxdWVfbmFtZSI6Imp1bGllbiB0ZXN0IiwibmJmIjoxNjE0NjA4NTU2LCJpc3MiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8iLCJhdWQiOiJodHRwczovL3Rlc3RhcGkuZ29vZC1hbmdlbC5mci8ifQ.FGdwGt2p6aXEGWEb0RMnunqu9CGQR1vIZNFxRSBHniQ`;
@@ -262,6 +272,9 @@ function Antecedants() {
                   key="insuranceMonths"
                   value={proposition?.drivers?.drivers[0]?.insuranceMonths}
                 />
+
+                {/* je vérifie les informations saisie et j'affiche le message d'erreur correspondant.*/}
+
                 <span
                   className={
                     proposition?.drivers?.drivers[0]?.previousInsurance
