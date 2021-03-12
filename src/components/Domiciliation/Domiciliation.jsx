@@ -30,10 +30,10 @@ function Domiciliation() {
       let fetchAddress = e.target.value.split(" ").join("+");
       axios
         .get(
-          `https://geocode.search.hereapi.com/v1/
-          geocode?q=${fetchAddress}&apiKey=HJOMK543rJEuqp4_UDWH0zqXul1RXJUZcBzVX-5Cgg0`)
+          `https://geocode.search.hereapi.com/v1/geocode?q=${fetchAddress}&apiKey=HJOMK543rJEuqp4_UDWH0zqXul1RXJUZcBzVX-5Cgg0`)
         .then((res) => {
-          console.log(res);
+          setFindAddress(res.data.items);
+          console.log(res.data.items);
         });
     }
   };
@@ -43,20 +43,20 @@ function Domiciliation() {
       ...proposition,
       vehicle: {
         ...proposition.vehicle,
-        postalCode: address[0].properties.postcode,
-        city: address[0].properties.city,
+        postalCode: address[0].address.postalCode,
+        city: address[0].address.city,
       },
     });
     setMainDriver({
       ...mainDriver,
-      address: address[0].properties.name,
-      zip_code: address[0].properties.postcode,
-      city: address[0].properties.city,
+      address: `${address[0].address.houseNumber} ${address[0].address.street}`,
+      zip_code: address[0].address.postalCode,
+      city: address[0].address.city,
     });
   };
 
   const selectAddress = (e) => {
-    setAddress([findAddress.find((el) => el.properties.id === e.target.id)]);
+    setAddress([findAddress.find((el) => el.id === e.target.id)]);
     setFindAddress("");
   };
 
@@ -75,7 +75,7 @@ function Domiciliation() {
                 name="address"
                 key="address"
                 onChange={(e) => handleAddress(e)}
-                value={address ? address[0]?.properties.label : ""}
+                value={address ? address[0]?.address.label : ""}
               />
             </label>
             <div className={styles.dom_placeholder}>VOTRE ADRESSE</div>
@@ -103,7 +103,7 @@ function Domiciliation() {
 
       <div
         className={
-          findAddress.length > 5
+          findAddress.length > 0
             ? styles.dom_address_list
             : styles.dom_address_list_hidden
         }
@@ -112,11 +112,11 @@ function Domiciliation() {
           {findAddress &&
             findAddress.map((e) => (
               <li
-                key={e.properties.id}
-                id={e.properties.id}
+                key={e.id}
+                id={e.id}
                 onClick={(e) => selectAddress(e)}
               >
-                {e.properties.label}
+                {e.address.label}
               </li>
             ))}
         </ul>

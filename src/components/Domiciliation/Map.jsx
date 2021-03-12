@@ -30,8 +30,8 @@ function Map({ address }) {
         />
         {
           address && address.map((el) => (
-            <Marker key={el.properties.id} position={[el.geometry.coordinates[1], el.geometry.coordinates[0]]} icon={DefaultIcon}>
-              <Popup>{el.properties.label}</Popup>
+            <Marker key={el.id} position={[el.position.lat, el.position.lng]} icon={DefaultIcon}>
+              <Popup>{el.address.label}</Popup>
             </Marker>
           ))}
       </MapContainer>
