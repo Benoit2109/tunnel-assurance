@@ -14,7 +14,7 @@ function Financing() {
   const [finance, setFinance] = useState("");
 
   useEffect(()=>{
-    setHeader({path:"/vehicule-condition", title:"Financement"})
+    setHeader({path:"/vehicule-condition", title:"Information du véhicule"})
   },[setHeader])
 
   const HandleBuy = (e) => {

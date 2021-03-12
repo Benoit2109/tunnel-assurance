@@ -1,33 +1,62 @@
-.vi_wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.vi_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.vi_form_wrapper{
-    display: flex;
-    flex-direction: column;
+.vi_form_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
 }
 
 .vi_form_wrapper select {
-    -webkit-appearance:     none;
-    -moz-appearance:        none;
-    appearance:             none;
-    display:        inline-block;
-    padding:        .5em 2em .5em .9em;
-    cursor:         pointer;
-    font-size:      1rem;
-    border:         1px solid rgb(207, 210, 219);
-    border-radius:  .2em;
-    background-color:     rgb(250, 250, 250);
-    background-image: url(../../assets/images/chevron_down.png);
-    background-size: .8em;
-    background-repeat: no-repeat;
-    background-position: calc(100% - .6em) center;
-    outline: none;
-    width: 95vw;
-    max-width: 300px;
-    box-shadow: 0 0 3px rgba(128, 128, 128, 0.4);
-    border: none;
-    margin: 1rem 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  padding: 0.5em 2em 0.5em 0.9em;
+  cursor: pointer;
+  font-size: 1rem;
+  border: 1px solid rgb(207, 210, 219);
+  border-radius: 0.2em;
+  background-color: rgb(250, 250, 250);
+  background-image: url(../../assets/images/chevron_down.png);
+  background-size: 0.8em;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.6em) center;
+  outline: none;
+  width: 90vw;
+  max-width: 500px;
+  box-shadow: 0 0 3px rgba(128, 128, 128, 0.4);
+  border: none;
+  margin: 1rem 0;
 }
+
+.vi_field_wrapper {
+  margin: 1rem 0;
+  width: 100%;
+  position: relative;
+}
+
+.vi_placeholder {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.5rem;
+  color: var(--main-color-blue-light);
+  font-size: 0.8rem;
+}
+
+.vi_field_wrapper input[type="number"] {
+    width: 86vw;
+    max-width: 485px;
+    height: 2.5rem;
+    color: var(--main-color-blue-light);
+    border-radius: 0.2em;
+    border: solid 1.5px rgba(128, 128, 128, 0.2);
+    text-align: right;
+    padding-right: 1rem;
+    font-size: 1rem;
+  }

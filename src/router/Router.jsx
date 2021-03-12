@@ -10,6 +10,7 @@ import ActualVehicule from "../components/ActualVehicule/ActualVehicule";
 import Domiciliation from "../components/Domiciliation/Domiciliation";
 import Trajets from "../components/Trajets/Trajets";
 import Informations from "../components/Informations/Informations";
+import Informations2 from "../components/Informations/Informations2";
 import Antecedants from "../components/Antecedants/Antecedants";
 
 
@@ -27,6 +28,7 @@ const Root = () => (
             <MainLayout exact path="/domiciliation" component={Domiciliation}/>
             <MainLayout exact path="/trajets" component={Trajets}/>
             <MainLayout exact path="/informations" component={Informations}/>
+            <MainLayout exact path="/informations2" component={Informations2}/>
             <MainLayout exact path="/antecedants" component={Antecedants}/>
         </Switch>
     </Router>

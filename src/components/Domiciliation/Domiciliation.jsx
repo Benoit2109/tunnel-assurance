@@ -17,10 +17,10 @@ function Domiciliation() {
   const [address, setAddress] = useState([]);
   const [findAddress, setFindAddress] = useState([]);
 
-  // j'initialise mon header avec les infos reçu au montge de mon composant.
+  // j'initialise mon header avec les infos reçu au montage de mon composant.
 
   useEffect(() => {
-    if (header.path === "/owned-car") {
+    if (proposition.vehicle.gettingMode === "HAVE_ALREADY_VEHICLE") {
       setHeader({ path: "/actual-vehicule", title: "Domiciliation" });
     } else {
       setHeader({ path: "/select-vehicule", title: "Domiciliation" });
@@ -34,7 +34,7 @@ function Domiciliation() {
       let fetchAddress = e.target.value.split(" ").join("+");
       axios
         .get(
-          `https://geocode.search.hereapi.com/v1/geocode?q=${fetchAddress}&apiKey=0UDiQDnGqivVBljhgwZiqCJHiE45lClwR5j4ClysH88`)
+          `https://geocode.search.hereapi.com/v1/geocode?q=${fetchAddress}&limit=10&apiKey=0UDiQDnGqivVBljhgwZiqCJHiE45lClwR5j4ClysH88`)
         .then((res) => {
           setFindAddress(res.data.items);
         });

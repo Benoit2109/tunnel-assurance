@@ -232,7 +232,7 @@ function Informations() {
                   type="text"
                   name="city"
                   key="city"
-                  value={proposition?.vehicle?.city}
+                  value={secondDriver?.city}
                   onChange={(e) => handleDriver(e)}
                 />
               </label>
@@ -320,12 +320,12 @@ function Informations() {
       <Link to="/antecedants">
         <button
           className={
-            proposition.drivers.drivers[1].sex !== "UNKNOWN" &&
-            proposition.drivers.drivers[1].birthDate !== "" &&
-            proposition.drivers.drivers[1].familySituation !== "UNKNOWN" &&
-            proposition.drivers.drivers[1].profession !== "UNKNOWN" &&
-            proposition.drivers.drivers[1].drivingLicenceObtainedDate !== "" &&
-            proposition.drivers.drivers[1].accompaniedDriving !== "UNKNOWN"
+            proposition?.drivers?.drivers[1]?.sex !== "UNKNOWN" &&
+            proposition?.drivers?.drivers[1]?.birthDate !== "" &&
+            proposition?.drivers?.drivers[1]?.familySituation !== "UNKNOWN" &&
+            proposition?.drivers?.drivers[1]?.profession !== "UNKNOWN" &&
+            proposition?.drivers?.drivers[1]?.drivingLicenceObtainedDate !== "" &&
+            proposition?.drivers?.drivers[1]?.accompaniedDriving !== "UNKNOWN"
               ? style.btn_visible
               : style.btn_hidden
           }
